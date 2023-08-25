@@ -33,7 +33,6 @@ public class NoteEntity {
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
 
-    @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity noteOwner;
+    @Column(name = "user_id")
+    private UUID userId;
 }
