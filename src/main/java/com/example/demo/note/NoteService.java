@@ -1,6 +1,6 @@
 package com.example.demo.note;
 
-import com.example.demo.exception.NoteNotFoundException;
+import com.example.demo.exception.note.NoteNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
