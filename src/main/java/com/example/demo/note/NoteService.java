@@ -1,21 +1,19 @@
 package com.example.demo.note;
 
-
 import com.example.demo.exception.NoteNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 
 @Service
 @RequiredArgsConstructor
 public class NoteService {
     private final NoteRepository noteRepository;
-
 
     public List<NoteEntity> getAll() {
         return noteRepository.findAll();
@@ -35,10 +33,12 @@ public class NoteService {
     }
 
     public void updateNote(NoteEntity noteEntity) throws NoteNotFoundException {
-        NoteEntity ee = getById(noteEntity.getId());
-        ee.setTitle(noteEntity.getTitle());
-        ee.setContent(noteEntity.getContent());
-        noteRepository.save(ee);
+        NoteEntity updatedNote = getById(noteEntity.getId());
+        updatedNote.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        updatedNote.setTitle(noteEntity.getTitle());
+        updatedNote.setContent(noteEntity.getContent());
+        updatedNote.setAccessType(noteEntity.getAccessType());
+        noteRepository.save(updatedNote);
     }
 
     public void deleteById(UUID id) throws NoteNotFoundException {
@@ -48,8 +48,5 @@ public class NoteService {
         } else {
             throw new NoteNotFoundException(id);
         }
-
     }
-
-
 }
