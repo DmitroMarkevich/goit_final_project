@@ -1,14 +1,17 @@
 package com.example.demo.note;
 
-import com.example.demo.user.UserEntity;
+
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "note")
 public class NoteEntity {
