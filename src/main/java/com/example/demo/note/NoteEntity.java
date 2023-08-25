@@ -8,10 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "note")
 public class NoteEntity {
