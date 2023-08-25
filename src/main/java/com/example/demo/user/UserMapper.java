@@ -1,11 +1,10 @@
 package com.example.demo.user;
 
 import com.example.demo.utils.Mapper;
-import org.hibernate.engine.spi.Managed;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper implements Mapper<UserDto,UserEntity> {
+public class UserMapper implements Mapper<UserDto, UserEntity> {
     @Override
     public UserDto mapEntityToDto(UserEntity source) {
         return UserDto.builder()
