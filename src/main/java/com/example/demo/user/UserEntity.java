@@ -12,9 +12,6 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class UserEntity {
     @Id
