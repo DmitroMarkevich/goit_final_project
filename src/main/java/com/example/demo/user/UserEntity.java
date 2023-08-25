@@ -48,6 +48,7 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "noteOwner", fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @OneToMany(fetch = FetchType.LAZY)
     private Collection<NoteEntity> notes;
 }
