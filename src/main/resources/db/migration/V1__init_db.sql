@@ -5,7 +5,7 @@ CREATE TABLE "user"
     updated_at TIMESTAMP,
     username   VARCHAR(50) UNIQUE NOT NULL CHECK (LENGTH(username) >= 5),
     email      VARCHAR(50) UNIQUE NOT NULL CHECK (LENGTH(email) >= 5),
-    password   VARCHAR(100)       NOT NULL CHECK ( LENGTH(password) >= 8),
+    password   VARCHAR(100)       NOT NULL CHECK (LENGTH(password) >= 8),
     first_name VARCHAR(50),
     last_name  VARCHAR(50)
 );
