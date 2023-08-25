@@ -3,6 +3,7 @@ package com.example.demo.user;
 import com.example.demo.note.NoteEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
@@ -11,13 +12,16 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "user")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
 public class UserEntity {
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private Timestamp createdAt;
 
