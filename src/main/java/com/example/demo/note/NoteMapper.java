@@ -17,4 +17,17 @@ public class NoteMapper implements Mapper<NoteDto, NoteEntity> {
                 .userId(source.getUserId())
                 .build();
     }
+
+    @Override
+    public NoteEntity mapDtoToEntity(NoteDto source) {
+        return NoteEntity.builder()
+                .id(source.getId())
+                .createdAt(source.getCreatedAt())
+                .updatedAt(source.getUpdatedAt())
+                .title(source.getTitle())
+                .content(source.getContent())
+                .accessType(source.getAccessType())
+                .userId(source.getUserId())
+                .build();
+    }
 }
