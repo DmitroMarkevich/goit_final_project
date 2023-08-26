@@ -1,22 +1,22 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = "/note")
 public class NoteController {
-
-    @Autowired
-    private NoteService noteService;
+    private final NoteService noteService;
 
     @GetMapping("/list")
-    public ModelAndView getAllNotes(){
+    public ModelAndView getAllNotes() {
         ModelAndView result = new ModelAndView("notes");
         result.addObject("allNotes", noteService.getAll());
         return result;
@@ -35,13 +35,13 @@ public class NoteController {
         return result;
     }
 
-    @PostMapping(value = "/edit")
+    @PostMapping("/edit")
     public RedirectView saveChanges(@ModelAttribute NoteEntity note) throws NoteNotFoundException {
         noteService.updateNote(note);
         return new RedirectView("/note/list");
     }
 
-    @PostMapping(value = "/delete")
+    @PostMapping("/delete")
     public RedirectView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
         return new RedirectView("/note/list");
