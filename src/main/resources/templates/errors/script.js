@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (backButton) {
         backButton.addEventListener("click", function () {
-            window.location.href = "/";
+            window.location.href = "/"; // Треба прописати логіку перенаправлення в залежності від того чи авторизований користувач
         });
     }
 });
