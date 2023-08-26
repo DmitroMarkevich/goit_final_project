@@ -9,9 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/account")
 public class UserController {
 
-    @Autowired
-    UserService userService;
-
     @GetMapping("/get")
     public ModelAndView getAccount() {
         return new ModelAndView(/*URL*/);
