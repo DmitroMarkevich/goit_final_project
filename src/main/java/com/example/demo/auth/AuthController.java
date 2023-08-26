@@ -1,30 +1,55 @@
 package com.example.demo.auth;
 
-import com.example.demo.user.UserEntity;
-import com.example.demo.user.UserService;
+import com.example.demo.user.UserDto;
+import com.example.demo.user.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserService userService;
-
-    @PostMapping("/register")
-    public void registerUser(@RequestBody UserEntity userEntity) {
-
-    }
+    private final UserValidator userValidator;
 
     @GetMapping("/login")
-    private String getLoginPage() {
-        return "auth/login";
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("auth/login");
+        return modelAndView;
+    }
+
+    @PostMapping("/login")
+    public ModelAndView loginSubmit() {
+        ModelAndView modelAndView = new ModelAndView();
+        // код для автентифікації користувача
+        modelAndView.setViewName("redirect:/note/list");
+        return modelAndView;
     }
 
     @GetMapping("/register")
-    public String getRegisterPage() {
-        return "auth/register";
+    public ModelAndView registration() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("auth/register");
+        return modelAndView;
+    }
+
+    @PostMapping("/register")
+    public ModelAndView registration(@ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        userValidator.validate(userDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("registrationError"); // Помилки введення даних
+        } else {
+            //код для збереження користувача в базі даних
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
     }
 }
+
