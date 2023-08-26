@@ -3,15 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
     <title>Page Not Found</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .error-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+
+        #backButton {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #backButton:hover {
+            background-color: #0056b3;
+        }
+
+        #backButton:active {
+            background-color: #00449e;
+        }
+    </style>
 </head>
 <body>
 <div class="error-container">
     <h1>404 - Page Not Found</h1>
-    <p>The page you are looking for doesn't exist.</p>
-    <button id="backButton">Back to Main Menu</button>
+    <p>Сторінка, яку ви шукаєте, не була знайдена.</p>
+    <button id="backButton">Повернутися до головного меню</button>
 </div>
-<script src="../script.js"></script>
 </body>
 </html>
