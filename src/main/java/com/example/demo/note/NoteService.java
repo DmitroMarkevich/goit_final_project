@@ -25,6 +25,7 @@ public class NoteService {
 
     public NoteEntity getById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
+
         if (optionalNote.isPresent()) {
             return optionalNote.get();
         } else {
@@ -43,8 +44,9 @@ public class NoteService {
 
     public void deleteById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
+
         if (optionalNote.isPresent()) {
-            noteRepository.deleteById(id);
+            noteRepository.delete(optionalNote.get());
         } else {
             throw new NoteNotFoundException(id);
         }
