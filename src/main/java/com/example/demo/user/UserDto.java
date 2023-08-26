@@ -1,8 +1,7 @@
 package com.example.demo.user;
 
 import com.example.demo.note.NoteEntity;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -10,6 +9,8 @@ import java.util.UUID;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private UUID id;
     private Timestamp createdAt;
