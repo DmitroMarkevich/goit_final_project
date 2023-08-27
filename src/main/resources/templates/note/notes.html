@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <title>Notes</title>
+</head>
+<body>
+<header class="p-3 bg-dark text-white bd-navbar sticky-top">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <a th:href="@{/note/add}" type="button" class="add btn btn-primary me-2">Add new note</a>
+        <button type="button" class="btn btn-primary" disabled>
+          Notes total<span class="badge text-bg-danger ms-2" th:text="${notesList.size()}"></span>
+        </button>
+      </div>
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2">Logout</button>
+        <button type="button" class="btn btn-warning">Settings</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container mb-3">
+  <main class="bd-main">
+    <h1 class="my-5">My notes</h1>
+    <ul class="list-group">
+      <li class="list-group-item" th:each="note : ${notesList}">
+        <div class="card">
+          <div class="card-body col-9">
+            <h5 class="card-title" th:text="'Title: ' + ${note.title}"></h5>
+            <p class="card-text" th:text="'Content: ' + ${note.content}"></p>
+          </div>
+          <div class="card-footer bg-transparent">
+            <ul class="list-group list-group-horizontal">
+              <li class="list-group-item">
+                <a th:href="'/note/edit?id='+${note.id}" type="button" class="edit" title="Edit" data-toggle="tooltip">
+                  <i class="material-icons">&#xe254;</i>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a th:href="'/note/share?id='+${note.id}" type="button" class="share" title="Share" data-toggle="tooltip">
+                  <i class="material-icons">&#xe80d;</i>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <form th:action="@{/note/delete}" method="post" class="d-inline-block">
+                  <input type="hidden" name="id" th:value="${note.id}">
+                  <button type="submit" class="delete btn p-0" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xe872;</i></button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </main>
+</div>
+<footer class="py-4 bg-dark text-white">
+  <p class="text-center">Java Dev Final Project Team-2</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

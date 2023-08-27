@@ -22,8 +22,16 @@ public class NoteController {
         return result;
     }
 
+    @GetMapping("/add")
+    public ModelAndView getAddForm() {
+        return new ModelAndView("editor");
+    }
+
     @PostMapping("/add")
-    public RedirectView addNote(@ModelAttribute NoteEntity note) {
+    public RedirectView addNote(@RequestParam String title, @RequestParam String content) {
+        NoteEntity note = new NoteEntity();
+        note.setTitle(title);
+        note.setContent(content);
         noteService.addNote(note);
         return new RedirectView("/note/list");
     }
