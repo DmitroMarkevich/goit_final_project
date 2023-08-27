@@ -62,7 +62,7 @@
 
         .btn-login {
             width: 100%;
-            background-color: #007BFF;
+            background-color: #0d6efd;
             color: #fff;
             padding: 10px;
             border: none;
@@ -72,7 +72,7 @@
         }
 
         .btn-login:hover {
-            background-color: #0056b3;
+            background-color: #0b5ed7;
         }
 
         .btn-login:active {
@@ -88,22 +88,22 @@
 </head>
 <body>
 <div class="container">
-    <h2>Вхід</h2>
+    <h2>Log in</h2>
     <form action="/note/list" method="POST">
         <div class="form-group">
-            <label for="username">Логін:</label>
+            <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
         </div>
         <div class="form-group password-toggle-container">
-            <label for="password">Пароль:</label>
+            <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <span class="password-toggle" id="showPassword">
                 <span class="password-icon">&#128065;</span>
             </span>
         </div>
-        <button class="btn-login" type="submit">Увійти</button>
+        <button class="btn-login" type="submit">Login</button>
     </form>
-    <p class="separator">Ще не маєте облікового запису? <a href="/register">Зареєструватись</a></p>
+    <p class="separator">Don't have an account? <a href="/register">Sign Up</a></p>
 </div>
 
 <script>
