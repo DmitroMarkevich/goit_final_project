@@ -17,17 +17,17 @@ public class UserValidator implements Validator {
     UserDto userDto = (UserDto) target;
 
     if (userDto.getUsername().length() < 5 || userDto.getUsername().length() > 50) {
-        errors.rejectValue("username", "user.username.invalid", "Помилка - введіть логін від 5 до 50 символів!");
+        errors.rejectValue("username", "user.username.invalid", "Error - enter login from 5 to 50 characters!");
     } else if (!userDto.getUsername().matches("^[a-zA-Z0-9]+$")) {
-        errors.rejectValue("username", "user.username.invalidchars", "Логін може містити лише латинські букви та цифри!");
+        errors.rejectValue("username", "user.username.invalidchars", "The login can contain only Latin letters and numbers!");
     }
     if (userDto.getPassword().length() < 8 || userDto.getPassword().length() > 100) {
-        errors.rejectValue("password", "user.password.invalid", "Невірний пароль. Введіть не менше 8 символів!");
+        errors.rejectValue("password", "user.password.invalid", "Invalid password. Enter at least 8 characters!");
     }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email.empty", "Заповніть поле електронної пошти!");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "user.firstName.empty", "Введіть Ваше ім'я");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "user.lastName.empty", "Введіть Ваше прізвище!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email.empty", "Enter your email!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "user.firstName.empty", "Enter your name!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "user.lastName.empty", "Enter your last name!");
 
 }}
 

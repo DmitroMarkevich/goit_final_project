@@ -45,7 +45,7 @@ public class AuthController {
         userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("Вас зареєстровано!");
+            modelAndView.setViewName("You are registered!");
         } else {
             //код для збереження користувача в базі даних
             modelAndView.setViewName("redirect:/login");
