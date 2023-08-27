@@ -17,15 +17,15 @@ public class NoteController {
 
     @GetMapping("/list")
     public ModelAndView getAllNotes() {
-        ModelAndView result = new ModelAndView("note/notes");
+        ModelAndView result = new ModelAndView("note/list");
         result.addObject("allNotes", noteService.getAll()); // noteService.getAll() - test
         return result;
     }
 
-//    @GetMapping("/add")
-//    public ModelAndView getAddForm() {
-//        return new ModelAndView("note/editor");
-//    }
+    @GetMapping("/add")
+    public ModelAndView getAddForm() {
+        return new ModelAndView("note/editor");
+    }
 
     @PostMapping("/add")
     public RedirectView addNote(@RequestParam String title, @RequestParam String content) {
