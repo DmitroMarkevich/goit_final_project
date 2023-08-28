@@ -26,6 +26,7 @@ public class WebSecurityConfig {
                     login.defaultSuccessUrl("/");
                 })
                 .logout(logout -> {
+                    logout.logoutUrl("/logout");
                     logout.logoutSuccessUrl("/");
                     logout.deleteCookies("JSESSIONID");
                 })
