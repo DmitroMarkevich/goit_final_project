@@ -13,42 +13,41 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/note")
 public class NoteController {
+    private static final String REDIRECT_LIST = "/note/list";
     private final NoteService noteService;
 
     @GetMapping("/list")
-    public ModelAndView getAllNotes() {
-        ModelAndView result = new ModelAndView("note/list");
+    public ModelAndView listAllNotes() {
+        ModelAndView result = new ModelAndView(REDIRECT_LIST);
         result.addObject("allNotes", noteService.getAll()); // noteService.getAll() - test
         return result;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/create")
     public ModelAndView getAddForm() {
-        return new ModelAndView("note/add-new");
+        return new ModelAndView("note/create");
     }
 
-    @PostMapping("/add")
-    public RedirectView addNote(@ModelAttribute NoteEntity note) {
-        noteService.addNote(note);
-        return new RedirectView("/note/list");
+    @PostMapping("/create")
+    public RedirectView createNote(@ModelAttribute NoteEntity note) {
+        noteService.createNote(note);
+        return new RedirectView(REDIRECT_LIST);
     }
 
     @GetMapping("/edit")
-    public ModelAndView getEditForm(@RequestParam UUID id) throws NoteNotFoundException {
-        ModelAndView result = new ModelAndView("note/editor");
-        result.addObject("editNote", noteService.getById(id));
-        return result;
+    public ModelAndView showEditNoteForm(@RequestParam UUID id) throws NoteNotFoundException {
+        return new ModelAndView("note/editor").addObject("editNote", noteService.getById(id));
     }
 
-    @PostMapping("/edit")
-    public RedirectView saveChanges(@ModelAttribute NoteEntity note) throws NoteNotFoundException {
+    @PostMapping("/save")
+    public RedirectView saveNoteChanges(@ModelAttribute NoteEntity note) throws NoteNotFoundException {
         noteService.updateNote(note);
-        return new RedirectView("/note/list");
+        return new RedirectView(REDIRECT_LIST);
     }
 
     @PostMapping("/delete")
     public RedirectView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
-        return new RedirectView("/note/list");
+        return new RedirectView(REDIRECT_LIST);
     }
 }
