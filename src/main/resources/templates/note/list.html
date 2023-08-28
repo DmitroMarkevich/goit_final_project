@@ -17,13 +17,10 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <a th:href="@{/note/create}" type="button" class="add btn btn-primary me-2">Add new note</a>
-                <button type="button" class="btn btn-primary total">
-                    Notes total<span class="badge text-bg-danger ms-2" th:text="${allNotes.size()}"></span>
-                </button>
             </div>
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Logout</button>
-                <button type="button" class="btn btn-warning">Settings</button>
+                <button type="button" class="btn btn-warning me-2">Settings</button>
+                <button type="button" class="btn btn-outline-light">Logout</button>
             </div>
         </div>
     </div>
@@ -31,7 +28,10 @@
 <div class="container mb-3">
     <main class="bd-main">
         <h1 class="my-5" th:if="${allNotes.size() == 0}">It's Empty Here</h1>
-        <h1 class="my-5" th:unless="${allNotes.size() == 0}">My Notes</h1>
+        <h1 class="my-5" th:unless="${allNotes.size() == 0}">My Notes <span class="badge text-bg-danger ms-2"
+                                                                            th:text="${allNotes.size()}"
+                                                                            style="font-size: 45%; vertical-align: 25%;"></span>
+        </h1>
         <ul class="list-group">
             <li class="list-group-item" th:each="note : ${allNotes}">
                 <div class="card">
