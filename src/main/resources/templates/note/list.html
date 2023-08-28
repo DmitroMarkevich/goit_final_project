@@ -16,7 +16,7 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <a th:href="@{/note/add}" type="button" class="add btn btn-primary me-2">Add new note</a>
+                <a th:href="@{/note/create}" type="button" class="add btn btn-primary me-2">Add new note</a>
                 <button type="button" class="btn btn-primary total">
                     Notes total<span class="badge text-bg-danger ms-2" th:text="${allNotes.size()}"></span>
                 </button>
@@ -40,7 +40,8 @@
                         <p class="card-text" th:text="'Content: ' + ${note.content}"></p>
                     </div>
                     <div class="card-footer bg-transparent d-flex justify-content-between">
-                        <button class="access-type btn btn-sm btn-outline-secondary" th:text="${note.accessType}"></button>
+                        <button class="access-type btn btn-sm btn-outline-secondary"
+                                th:text="${note.accessType}"></button>
                         <ul class="list-group list-group-horizontal justify-content-end">
                             <li class="list-group-item">
                                 <a th:href="'/note/edit?id='+${note.id}" type="button" class="edit" title="Edit"
