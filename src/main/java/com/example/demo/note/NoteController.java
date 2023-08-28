@@ -24,18 +24,12 @@ public class NoteController {
 
     @GetMapping("/add")
     public ModelAndView getAddForm() {
-        return new ModelAndView("note/editor");
+        return new ModelAndView("note/add-new");
     }
 
     @PostMapping("/add")
-    public RedirectView addNote(@RequestParam String title, @RequestParam String content) {
-        noteService.addNote(NoteEntity.builder()
-                .title(title)
-                .content(content)
-                .accessType(AccessType.PRIVATE)
-                .userId(UUID.fromString("461e8eda-9e13-4051-a677-3dbf4ad5b2d8")) // test!!!
-                .build()
-        );
+    public RedirectView addNote(@ModelAttribute NoteEntity note) {
+        noteService.addNote(note);
         return new RedirectView("/note/list");
     }
 
