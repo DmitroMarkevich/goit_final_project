@@ -18,9 +18,7 @@ public class NoteController {
 
     @GetMapping("/list")
     public ModelAndView listAllNotes() {
-        ModelAndView result = new ModelAndView(REDIRECT_LIST);
-        result.addObject("allNotes", noteService.getAll()); // noteService.getAll() - test
-        return result;
+        return new ModelAndView(REDIRECT_LIST).addObject("allNotes", noteService.getAll());
     }
 
     @GetMapping("/create")
@@ -39,7 +37,7 @@ public class NoteController {
         return new ModelAndView("note/editor").addObject("editNote", noteService.getById(id));
     }
 
-    @PostMapping("/save")
+    @PostMapping("/edit")
     public RedirectView saveNoteChanges(@ModelAttribute NoteEntity note) throws NoteNotFoundException {
         noteService.updateNote(note);
         return new RedirectView(REDIRECT_LIST);
@@ -49,5 +47,10 @@ public class NoteController {
     public RedirectView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
         return new RedirectView(REDIRECT_LIST);
+    }
+
+    @GetMapping("/share")
+    public ModelAndView showShareNoteForm(@RequestParam UUID id) {
+        return new ModelAndView(/* test */);
     }
 }
