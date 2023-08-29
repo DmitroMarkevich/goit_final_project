@@ -1,6 +1,8 @@
 package com.example.demo.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,11 +15,13 @@ public class UserController {
 
     @GetMapping("/settings")
     public ModelAndView getAccount() {
-        return new ModelAndView("user/settings");
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = principal.getUsername();
+        return new ModelAndView("user/settings").addObject("editUser", userService.getUserByUsername(username));
     }
 
     @PostMapping("/update")
-    public void updateAccount(@RequestBody UserEntity userEntity) {
-        //to be continued
+    public void updateAccount(@ModelAttribute UserDto userDto) {
+        userService.updateUser(userDto);
     }
 }
