@@ -25,11 +25,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
-    public static void main(String[] args) {
-        UserService userService = new UserService();
-        System.out.println(userService.loadUserByUsername("test_username"));
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserEntity user = userRepository.findByUsername(username)
