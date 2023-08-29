@@ -1,10 +1,7 @@
 package com.example.demo.user;
 
-import com.example.demo.exception.note.NoteNotFoundException;
-import com.example.demo.exception.user.UserAlreadyExistsException;
-import com.example.demo.exception.user.UserNotFoundException;
-import com.example.demo.note.NoteEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -41,28 +37,34 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto updateUser(UserDto userDto) {
-        if (userDto == null) {
-            throw new IllegalArgumentException("UserDto is null.");
-        }
+        String username = userDto.getUsername();
 
-        UUID userId = userDto.getId();
-        UserEntity existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
-        if (userRepository.existsByUsername(userDto.getUsername()) || userRepository.existsByEmail(userDto.getEmail())) {
-            throw new UserAlreadyExistsException(userDto.getUsername(), userDto.getEmail());
-        }
-
-        UserEntity.UserEntityBuilder userBuilder = existingUser.toBuilder().updatedAt(new Timestamp(System.currentTimeMillis()));
-
-        return userMapper.mapEntityToDto(userRepository.save(userBuilder.build()));
-    }
-
-    public UserEntity getUserByUsername(String username) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        } else {
-            throw new UserNotFoundException(optionalUser.get().getId());
+            UserEntity.UserEntityBuilder userBuilder = optionalUser.get().toBuilder()
+                    .email(userDto.getEmail())
+                    .firstName(userDto.getFirstName())
+                    .lastName(userDto.getLastName())
+                    .password(passwordEncoder.encode(userDto.getPassword()))
+                    .updatedAt(new Timestamp(System.currentTimeMillis()));
+
+            return userMapper.mapEntityToDto(userRepository.save(userBuilder.build()));
         }
+
+        return new UserDto();
+    }
+
+    public UserDto getUser() {
+        Optional<UserEntity> optionalUser = userRepository.findByUsername(getUsername());
+
+        if (optionalUser.isPresent()) {
+            return userMapper.mapEntityToDto(optionalUser.get());
+        }
+
+        return new UserDto();
+    }
+
+    public String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

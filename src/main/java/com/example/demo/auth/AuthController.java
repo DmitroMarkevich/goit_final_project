@@ -19,37 +19,31 @@ public class AuthController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/login");
-        return modelAndView;
+    public ModelAndView showLoginForm() {
+        return new ModelAndView("auth/login");
     }
 
     @PostMapping("/login")
     public ModelAndView loginSubmit() {
-        ModelAndView modelAndView = new ModelAndView();
-        // код для автентифікації користувача
-        modelAndView.setViewName("redirect:/note/list");
-        return modelAndView;
+        return new ModelAndView("redirect:/note/list");
     }
 
     @GetMapping("/register")
-    public ModelAndView registration() {
+    public ModelAndView showRegistrationForm() {
         return new ModelAndView("auth/register");
     }
 
     @PostMapping("/register")
-    public ModelAndView registration(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
+    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors());
             modelAndView.setViewName("error/base-error");
         } else {
             userService.createUser(userDto);
-            modelAndView.setViewName("redirect:/note/list");
+            modelAndView.setViewName("auth/login");
         }
         return modelAndView;
     }

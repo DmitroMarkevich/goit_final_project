@@ -3,6 +3,8 @@ package com.example.demo.user;
 import com.example.demo.utils.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserMapper implements Mapper<UserDto, UserEntity> {
     @Override
@@ -33,5 +35,12 @@ public class UserMapper implements Mapper<UserDto, UserEntity> {
                 .lastName(source.getLastName())
                 .notes(source.getNotes())
                 .build();
+    }
+
+    @Override
+    public List<UserDto> mapListEntityToDto(List<UserEntity> source) {
+        return source.stream()
+                .map(this::mapEntityToDto)
+                .toList();
     }
 }

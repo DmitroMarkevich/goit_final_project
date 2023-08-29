@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -21,7 +23,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/", "/login", "/register", "/img/**", "/css/**", "/js/**").permitAll();
                     authorize.anyRequest().authenticated();
-//                    authorize.anyRequest().permitAll();
                 })
                 .formLogin(login -> {
                     login.loginPage("/login");
@@ -29,7 +30,6 @@ public class WebSecurityConfig {
                 })
                 .logout(logout -> {
                     logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
-//                    logout.logoutUrl("/logout");
                     logout.logoutSuccessUrl("/login");
                     logout.deleteCookies("JSESSIONID");
                 })
