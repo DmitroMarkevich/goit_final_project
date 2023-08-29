@@ -60,6 +60,6 @@ public class UserEntity {
     private String lastName;
 
     @JoinColumn(name = "user_id")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private Collection<NoteEntity> notes;
 }

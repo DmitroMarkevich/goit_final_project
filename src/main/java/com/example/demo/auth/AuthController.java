@@ -1,7 +1,9 @@
 package com.example.demo.auth;
 
 import com.example.demo.user.UserDto;
+import com.example.demo.user.UserService;
 import com.example.demo.user.UserValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserValidator userValidator;
+    private final UserService userService;
 
     @GetMapping("/login")
     public ModelAndView login() {
@@ -32,22 +35,21 @@ public class AuthController {
 
     @GetMapping("/register")
     public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/register");
-        return modelAndView;
+        return new ModelAndView("auth/register");
     }
 
     @PostMapping("/register")
-    public ModelAndView registration(@ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+    public ModelAndView registration(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registrationError");
+            System.out.println(bindingResult.getAllErrors());
+            modelAndView.setViewName("error/base-error");
         } else {
-            //код для збереження користувача в базі даних
-            modelAndView.setViewName("redirect:/login");
+            userService.createUser(userDto);
+            modelAndView.setViewName("redirect:/note/list");
         }
         return modelAndView;
     }

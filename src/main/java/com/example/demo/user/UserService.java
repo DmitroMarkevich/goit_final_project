@@ -1,11 +1,9 @@
 package com.example.demo.user;
 
-import com.example.demo.config.UserDetailsImpl;
 import com.example.demo.exception.user.UserAlreadyExistsException;
 import com.example.demo.exception.user.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,81 +11,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserEntity user = userRepository.findByUsername(username)
+        UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-        return UserDetailsImpl.build(user);
+        return new User(userEntity.getUsername(), userEntity.getPassword(), List.of());
     }
 
-    public UserDto updateUser(UUID id, UserDto userDto) {
-        if (id == null) {
-            throw new NullPointerException("Id is null.");
-        }
+    public void createUser(UserDto userDto) {
+        userRepository.save(userMapper.mapDtoToEntity(userDto).toBuilder()
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .updatedAt(new Timestamp(System.currentTimeMillis()))
+                .build()
+        );
+    }
+
+    public UserDto updateUser(UserDto userDto) {
         if (userDto == null) {
-            throw new NullPointerException("Dto is null.");
+            throw new IllegalArgumentException("UserDto is null.");
         }
 
-        UserEntity existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+        UUID userId = userDto.getId();
+        UserEntity existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
-        if (userRepository.existsByUsername(userDto.getUsername())
-                || userRepository.existsByEmail(userDto.getEmail())) {
+        if (userRepository.existsByUsername(userDto.getUsername()) || userRepository.existsByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException(userDto.getUsername(), userDto.getEmail());
         }
 
-        UserEntity.UserEntityBuilder userBuilder = existingUser.toBuilder()
-                .updatedAt(new Timestamp(System.currentTimeMillis()));
+        UserEntity.UserEntityBuilder userBuilder = existingUser.toBuilder().updatedAt(new Timestamp(System.currentTimeMillis()));
 
-        if (StringUtils.isNotBlank(userDto.getUsername())) {
-            userBuilder.username(userDto.getUsername());
-        }
-        if (StringUtils.isNotBlank(userDto.getEmail())) {
-            userBuilder.email(userDto.getEmail());
-        }
-        if (StringUtils.isNotBlank(userDto.getPassword())) {
-            userBuilder.password(encoder.encode(userDto.getPassword()));
-        }
-        if (StringUtils.isNotBlank(userDto.getFirstName())) {
-            userBuilder.firstName(userDto.getFirstName());
-        }
-        if (StringUtils.isNotBlank(userDto.getLastName())) {
-            userBuilder.lastName(userDto.getLastName());
-        }
         return userMapper.mapEntityToDto(userRepository.save(userBuilder.build()));
-    }
-
-    public UserDto createUser(UserDto userDto) {
-        if (userRepository.existsByUsername(userDto.getUsername())
-                || userRepository.existsByEmail(userDto.getEmail())) {
-            throw new UserAlreadyExistsException(userDto.getUsername(), userDto.getEmail());
-        }
-
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-
-        UserEntity user = UserEntity.builder()
-                .username(userDto.getUsername())
-                .email(userDto.getEmail())
-                .password(encoder.encode(userDto.getPassword()))
-                .createdAt(now)
-                .updatedAt(now)
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .build();
-
-        return userMapper.mapEntityToDto(userRepository.save(user));
     }
 }
