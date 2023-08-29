@@ -19,7 +19,7 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/", "/login", "/register").permitAll();
+                    authorize.requestMatchers("/", "/login", "/register", "/img/**", "/css/**", "/js/**").permitAll();
                     authorize.anyRequest().authenticated();
 //                    authorize.anyRequest().permitAll();
                 })
@@ -37,7 +37,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 }
