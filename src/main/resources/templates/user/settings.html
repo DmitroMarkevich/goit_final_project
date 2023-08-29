@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <title>Account Settings</title>
+</head>
+<body class="d-flex flex-column h-100">
+<header class="p-3 bg-dark text-white bd-navbar sticky-top">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <a th:href="@{/note/list}" type="button" class="add btn btn-primary me-2">Main</a>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light">Logout</button>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container col-md-12 col-xl-4">
+    <h1 class="my-3" th:text="${editUser?.username} + ' account settings'">Heading</h1>
+    <form th:action="@{/account/update}" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input type="text" id="username" class="form-control form-control-lg" th:value="${editUser?.username}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" id="email" class="form-control form-control-lg"
+                   placeholder="Enter a valid email address" required minlength="5" maxlength="50" th:value="${editUser?.email}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-control form-control-lg"
+                   placeholder="Enter new password" required minlength="8" maxlength="100" th:value="${editUser?.password}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="name">First name (Optional)</label>
+            <input type="text" id="name" class="form-control form-control-lg"
+                   placeholder="Enter your name" th:value="${editUser?.firstName}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="lastname">Last name (Optional)</label>
+            <input type="text" id="lastname" class="form-control form-control-lg"
+                   placeholder="Enter your last name" th:value="${editUser?.lastName}">
+        </div>
+        <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Update
+            </button>
+            <a th:href="@{/note/list}" type="button" class="btn btn-outline-danger m-1"
+               style="padding-left: 2.5rem; padding-right: 2.5rem;">Cancel</a>
+        </div>
+    </form>
+</div>
+<footer class="py-4 bg-dark text-white mt-auto">
+    <p class="text-center">Java Dev Final Project Team-2</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>
