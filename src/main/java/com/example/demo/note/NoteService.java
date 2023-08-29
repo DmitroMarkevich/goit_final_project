@@ -19,7 +19,7 @@ public class NoteService {
         return noteRepository.findAll();
     }
 
-    public NoteEntity addNote(NoteEntity noteEntity) {
+    public NoteEntity createNote(NoteEntity noteEntity) {
         return noteRepository.save(noteEntity);
     }
 
