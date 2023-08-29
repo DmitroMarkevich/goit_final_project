@@ -1,7 +1,9 @@
 package com.example.demo.user;
 
+import com.example.demo.exception.note.NoteNotFoundException;
 import com.example.demo.exception.user.UserAlreadyExistsException;
 import com.example.demo.exception.user.UserNotFoundException;
+import com.example.demo.note.NoteEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,5 +55,14 @@ public class UserService implements UserDetailsService {
         UserEntity.UserEntityBuilder userBuilder = existingUser.toBuilder().updatedAt(new Timestamp(System.currentTimeMillis()));
 
         return userMapper.mapEntityToDto(userRepository.save(userBuilder.build()));
+    }
+
+    public UserEntity getUserByUsername(String username) {
+        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            throw new UserNotFoundException(optionalUser.get().getId());
+        }
     }
 }
