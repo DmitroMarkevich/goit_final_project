@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -17,24 +18,20 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
-//                    authorize.requestMatchers("/", "/login", "/register").permitAll();
-//                    authorize.anyRequest().authenticated();
-                    authorize.anyRequest().permitAll();
+                    authorize.requestMatchers("/", "/login", "/register").permitAll();
+                    authorize.anyRequest().authenticated();
+//                    authorize.anyRequest().permitAll();
                 })
                 .formLogin(login -> {
                     login.loginPage("/login");
-                    login.defaultSuccessUrl("/");
+                    login.defaultSuccessUrl("/note/list");
                 })
                 .logout(logout -> {
-                    logout.logoutUrl("/logout");
-                    logout.logoutSuccessUrl("/");
+                    logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
+//                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/login");
                     logout.deleteCookies("JSESSIONID");
                 })
                 .build();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
