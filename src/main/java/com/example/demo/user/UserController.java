@@ -11,7 +11,7 @@ public class UserController {
 
     @GetMapping("/get")
     public ModelAndView getAccount() {
-        return new ModelAndView(/*URL*/);
+        return new ModelAndView("user/settings");
     }
 
     @PostMapping("/update")
