@@ -19,7 +19,9 @@
                 <a th:href="@{/note/create}" type="button" class="add btn btn-primary me-2">Add new note</a>
             </div>
             <div class="text-end">
-                <button type="button" class="btn btn-warning me-2">Settings</button>
+                <a th:href="@{/user/settings}">
+                    <button type="button" class="btn btn-warning me-2">Settings</button>
+                </a>
                 <button type="button" class="btn btn-outline-light">Logout</button>
             </div>
         </div>

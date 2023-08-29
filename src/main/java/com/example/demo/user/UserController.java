@@ -1,15 +1,17 @@
 package com.example.demo.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
 
-    @GetMapping("/get")
+    @GetMapping("/settings")
     public ModelAndView getAccount() {
         return new ModelAndView("user/settings");
     }
