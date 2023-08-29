@@ -3,6 +3,8 @@ package com.example.demo.note;
 import com.example.demo.utils.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class NoteMapper implements Mapper<NoteDto, NoteEntity> {
     @Override
@@ -29,5 +31,12 @@ public class NoteMapper implements Mapper<NoteDto, NoteEntity> {
                 .accessType(source.getAccessType())
                 .userId(source.getUserId())
                 .build();
+    }
+
+    @Override
+    public List<NoteDto> mapListEntityToDto(List<NoteEntity> source) {
+        return source.stream()
+                .map(this::mapEntityToDto)
+                .toList();
     }
 }

@@ -62,22 +62,22 @@ class UserServiceIntegrationTest {
     @Test
     void updateUser() {
         assertThrows(NullPointerException.class,
-                () -> userService.updateUser(null, new UserDto()));
+                () -> userService.updateUser(new UserDto()));
         assertThrows(NullPointerException.class,
-                () -> userService.updateUser(UUID.randomUUID(), null));
+                () -> userService.updateUser(null));
         assertThrows(UserNotFoundException.class,
-                () -> userService.updateUser(UUID.randomUUID(), new UserDto()));
+                () -> userService.updateUser(new UserDto()));
         assertThrows(UserAlreadyExistsException.class,
-                () -> userService.updateUser(testUserId, UserDto.builder()
+                () -> userService.updateUser(UserDto.builder()
                         .username("test_service_username")
                         .build()));
         assertThrows(UserAlreadyExistsException.class,
-                () -> userService.updateUser(testUserId, UserDto.builder()
+                () -> userService.updateUser(UserDto.builder()
                         .email("test_service_email@test_email.com")
                         .build()));
 
         UserDto userDtoToUpdate = UserDto.builder().build();
-        UserDto userDtoResponse = userService.updateUser(testUserId, userDtoToUpdate);
+        UserDto userDtoResponse = userService.updateUser(userDtoToUpdate);
         assertEquals("test_service_username", userDtoResponse.getUsername());
         assertEquals("test_service_email@test_email.com", userDtoResponse.getEmail());
         assertTrue(encoder.matches("test_password", userDtoResponse.getPassword()));
@@ -91,7 +91,7 @@ class UserServiceIntegrationTest {
                 .firstName("test_firstName_updated")
                 .lastName("test_lastName_updated")
                 .build();
-        userDtoResponse = userService.updateUser(testUserId, userDtoToUpdate);
+        userDtoResponse = userService.updateUser(userDtoToUpdate);
         assertEquals("test_service_username_updated", userDtoResponse.getUsername());
         assertEquals("test_service_email_updated@test_email.com", userDtoResponse.getEmail());
         assertTrue(encoder.matches("test_password_updated", userDtoResponse.getPassword()));

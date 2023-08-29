@@ -1,24 +1,27 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/note")
 public class NoteController {
-    private static final String REDIRECT_LIST = "/note/list";
+    private final NoteValidator noteValidator;
     private final NoteService noteService;
 
     @GetMapping("/list")
-    public ModelAndView listAllNotes() {
-        return new ModelAndView(REDIRECT_LIST).addObject("allNotes", noteService.getAll());
+    public ModelAndView listNotes() {
+        return new ModelAndView("note/list").addObject("allNotes", noteService.getAllNotes());
     }
 
     @GetMapping("/create")
@@ -27,9 +30,19 @@ public class NoteController {
     }
 
     @PostMapping("/create")
-    public RedirectView createNote(@ModelAttribute NoteEntity note) {
-        noteService.createNote(note);
-        return new RedirectView(REDIRECT_LIST);
+    public ModelAndView createNote(@ModelAttribute @Valid NoteDto note, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        noteValidator.validate(note, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("error/base-error");
+        } else {
+            noteService.createNote(note);
+            modelAndView.setViewName("redirect:/note/list");
+        }
+
+        return modelAndView;
     }
 
     @GetMapping("/edit")
@@ -38,15 +51,15 @@ public class NoteController {
     }
 
     @PostMapping("/edit")
-    public RedirectView saveNoteChanges(@ModelAttribute NoteEntity note) throws NoteNotFoundException {
+    public RedirectView saveNoteChanges(@ModelAttribute NoteDto note) throws NoteNotFoundException {
         noteService.updateNote(note);
-        return new RedirectView(REDIRECT_LIST);
+        return new RedirectView("redirect:/note/list");
     }
 
     @PostMapping("/delete")
     public RedirectView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
-        return new RedirectView(REDIRECT_LIST);
+        return new RedirectView("redirect:/note/list");
     }
 
     @GetMapping("/share")
