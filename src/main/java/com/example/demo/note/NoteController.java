@@ -51,15 +51,15 @@ public class NoteController {
     }
 
     @PostMapping("/edit")
-    public RedirectView saveNoteChanges(@ModelAttribute NoteDto note) throws NoteNotFoundException {
+    public ModelAndView saveNoteChanges(@ModelAttribute NoteDto note) throws NoteNotFoundException {
         noteService.updateNote(note);
-        return new RedirectView("redirect:/note/list");
+        return new ModelAndView("redirect:/note/list");
     }
 
     @PostMapping("/delete")
-    public RedirectView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
+    public ModelAndView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
-        return new RedirectView("redirect:/note/list");
+        return new ModelAndView("redirect:/note/list");
     }
 
     @GetMapping("/share")

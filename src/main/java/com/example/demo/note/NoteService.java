@@ -30,24 +30,27 @@ public class NoteService {
         );
     }
 
-    public NoteEntity getById(UUID id) throws NoteNotFoundException {
+    public NoteDto getById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
 
         if (optionalNote.isPresent()) {
-            return optionalNote.get();
+            return noteMapper.mapEntityToDto(optionalNote.get());
         } else {
             throw new NoteNotFoundException(id);
         }
     }
 
     public void updateNote(NoteDto noteDto) throws NoteNotFoundException {
-        NoteEntity updatedNote = getById(noteDto.getId());
-        updatedNote.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        updatedNote.setTitle(noteDto.getTitle());
-        updatedNote.setContent(noteDto.getContent());
-        updatedNote.setAccessType(noteDto.getAccessType());
-        noteRepository.save(updatedNote);
+        noteRepository.save(noteMapper.mapDtoToEntity(getById(noteDto.getId())
+                .toBuilder()
+                .updatedAt(new Timestamp(System.currentTimeMillis()))
+                .title(noteDto.getTitle())
+                .content(noteDto.getContent())
+                .accessType(noteDto.getAccessType())
+                .build())
+        );
     }
+
 
     public void deleteById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
