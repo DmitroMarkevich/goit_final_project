@@ -1,6 +1,7 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
+import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -14,32 +15,46 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final UserService userService;
+    private final NoteMapper noteMapper;
 
-    public List<NoteEntity> getAll() {
-        return noteRepository.findAll();
+    public List<NoteDto> getAllNotes() {
+        return noteMapper.mapListEntityToDto(userService.getUser().getNotes());
     }
 
-    public NoteEntity createNote(NoteEntity noteEntity) {
-        return noteRepository.save(noteEntity);
+    public void createNote(NoteDto noteDto) {
+        noteRepository.save(noteMapper.mapDtoToEntity(noteDto).toBuilder()
+                .userId(userService.getUser().getId())
+                .updatedAt(new Timestamp(System.currentTimeMillis()))
+                .build()
+        );
     }
 
-    public NoteEntity getById(UUID id) throws NoteNotFoundException {
+    public NoteDto getById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
 
-        if (optionalNote.isPresent()) {
-            return optionalNote.get();
-        } else {
+        if (optionalNote.isEmpty()) {
             throw new NoteNotFoundException(id);
         }
+
+        NoteEntity noteEntity = optionalNote.get();
+
+        if (!userService.getUser().getNotes().contains(noteEntity)) {
+            throw new NoteNotFoundException(id);
+        }
+
+        return noteMapper.mapEntityToDto(noteEntity);
     }
 
-    public void updateNote(NoteEntity noteEntity) throws NoteNotFoundException {
-        NoteEntity updatedNote = getById(noteEntity.getId());
-        updatedNote.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        updatedNote.setTitle(noteEntity.getTitle());
-        updatedNote.setContent(noteEntity.getContent());
-        updatedNote.setAccessType(noteEntity.getAccessType());
-        noteRepository.save(updatedNote);
+    public void updateNote(NoteDto noteDto) throws NoteNotFoundException {
+        noteRepository.save(noteMapper.mapDtoToEntity(getById(noteDto.getId())
+                .toBuilder()
+                .updatedAt(new Timestamp(System.currentTimeMillis()))
+                .title(noteDto.getTitle())
+                .content(noteDto.getContent())
+                .accessType(noteDto.getAccessType())
+                .build())
+        );
     }
 
     public void deleteById(UUID id) throws NoteNotFoundException {

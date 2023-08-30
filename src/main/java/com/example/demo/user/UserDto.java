@@ -4,11 +4,11 @@ import com.example.demo.note.NoteEntity;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
@@ -20,5 +20,5 @@ public class UserDto {
     private String password;
     private String firstName;
     private String lastName;
-    private Collection<NoteEntity> notes;
+    private List<NoteEntity> notes;
 }

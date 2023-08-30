@@ -17,10 +17,10 @@ public class NoteValidator implements Validator {
         String noteContent = noteDto.getContent();
         String noteTitle = noteDto.getTitle();
 
-        if (noteContent.length() <= 500 && noteContent.length() >= 5) {
+        if (noteContent.length() >= 500 || noteContent.length() <= 5) {
             errors.rejectValue("content", "note.content.invalid", "Помилка - введіть вміст нотатки від 5 до 500 символів!");
         }
-        if (noteTitle.length() <= 100 && noteTitle.length() >= 5) {
+        if (noteTitle.length() >= 100 || noteTitle.length() <= 5) {
             errors.rejectValue("title", "note.title.invalid", "Помилка - введіть назву нотатки від 5 до 100 символів!");
         }
     }

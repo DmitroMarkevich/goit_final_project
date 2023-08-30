@@ -1,7 +1,9 @@
 package com.example.demo.auth;
 
 import com.example.demo.user.UserDto;
+import com.example.demo.user.UserService;
 import com.example.demo.user.UserValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,40 +16,34 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserValidator userValidator;
+    private final UserService userService;
 
     @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/login");
-        return modelAndView;
+    public ModelAndView showLoginForm() {
+        return new ModelAndView("auth/login");
     }
 
     @PostMapping("/login")
     public ModelAndView loginSubmit() {
-        ModelAndView modelAndView = new ModelAndView();
-        // код для автентифікації користувача
-        modelAndView.setViewName("redirect:/note/list");
-        return modelAndView;
+        return new ModelAndView("redirect:/note/list");
     }
 
     @GetMapping("/register")
-    public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth/register");
-        return modelAndView;
+    public ModelAndView showRegistrationForm() {
+        return new ModelAndView("auth/register");
     }
 
     @PostMapping("/register")
-    public ModelAndView registration(@ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registrationError");
+            modelAndView.setViewName("error/base-error");
         } else {
-            //код для збереження користувача в базі даних
-            modelAndView.setViewName("redirect:/login");
+            userService.createUser(userDto);
+            modelAndView.setViewName("auth/login");
         }
         return modelAndView;
     }

@@ -18,7 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -60,6 +60,6 @@ public class UserEntity {
     private String lastName;
 
     @JoinColumn(name = "user_id")
-    @OneToMany(fetch = FetchType.LAZY)
-    private Collection<NoteEntity> notes;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<NoteEntity> notes;
 }

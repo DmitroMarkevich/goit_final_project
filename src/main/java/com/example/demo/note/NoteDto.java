@@ -6,7 +6,9 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
 public class NoteDto {
     private UUID id;
     private Timestamp createdAt;
