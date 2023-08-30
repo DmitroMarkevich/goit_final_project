@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -54,16 +52,16 @@ public class NoteController {
     public ModelAndView saveNoteChanges(@ModelAttribute NoteDto note) throws NoteNotFoundException {
         noteService.updateNote(note);
         return new ModelAndView("redirect:/note/list");
-    }
+    } // need to secure
 
     @PostMapping("/delete")
     public ModelAndView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
         return new ModelAndView("redirect:/note/list");
-    }
+    } // need to secure
 
     @GetMapping("/share")
     public ModelAndView showShareNoteForm(@RequestParam UUID id) {
         return new ModelAndView(/* test */);
-    }
+    } // need to secure
 }
