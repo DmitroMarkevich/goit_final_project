@@ -1,12 +1,15 @@
 package com.example.demo.user;
 
 import org.junit.jupiter.api.Test;
+
 import java.sql.Timestamp;
 import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserMapperTest {
     private final UserMapper userMapper = new UserMapper();
+
     @Test
     public void testMapEntityToDto() {
         UserEntity entity = new UserEntity();
@@ -44,7 +47,7 @@ public class UserMapperTest {
         dto.setLastName("LastNameOfUser");
 
         UserEntity entity = userMapper.mapDtoToEntity(dto);
-        
+
         assertEquals(dto.getId(), entity.getId());
         assertEquals(dto.getCreatedAt(), entity.getCreatedAt());
         assertEquals(dto.getUpdatedAt(), entity.getUpdatedAt());

@@ -13,13 +13,15 @@ public class UserValidatorTest {
     @Mock
     private UserValidator userValidator;
     private UserRepository userRepository;
+
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
         userValidator = new UserValidator(userRepository);
     }
+
     @Test
-    public void testValidUserDto(){
+    public void testValidUserDto() {
         UserDto userDto = new UserDto();
         userDto.setUsername("validUsername");
         userDto.setEmail("valid@example.com");
@@ -31,6 +33,7 @@ public class UserValidatorTest {
 
         assertEquals(0, errors.getErrorCount());
     }
+
     @Test
     public void testInvalidShortUsername() {
         UserDto userDto = new UserDto();
@@ -45,6 +48,7 @@ public class UserValidatorTest {
 
         assertEquals(1, errors.getErrorCount());
     }
+
     @Test
     public void testInvalidLongUsername() {
         UserDto userDto = new UserDto();
@@ -59,6 +63,7 @@ public class UserValidatorTest {
 
         assertEquals(1, errors.getErrorCount());
     }
+
     @Test
     public void testInvalidEmailFormat() {
         UserDto userDto = new UserDto();
@@ -73,6 +78,7 @@ public class UserValidatorTest {
 
         assertEquals(1, errors.getErrorCount());
     }
+
     @Test
     public void testInvalidEmailLength() {
         UserDto userDto = new UserDto();
@@ -87,6 +93,7 @@ public class UserValidatorTest {
 
         assertEquals(1, errors.getErrorCount());
     }
+
     @Test
     public void testInvalidPasswordLength() {
         UserDto userDto = new UserDto();
@@ -102,7 +109,7 @@ public class UserValidatorTest {
         assertEquals(1, errors.getErrorCount());
     }
 
-   @Test
+    @Test
     public void testDuplicateEmail() {
         UserDto userDto = new UserDto();
         userDto.setUsername("validUsername");
