@@ -33,11 +33,17 @@ public class NoteService {
     public NoteDto getById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
 
-        if (optionalNote.isPresent()) {
-            return noteMapper.mapEntityToDto(optionalNote.get());
-        } else {
+        if (optionalNote.isEmpty()) {
             throw new NoteNotFoundException(id);
         }
+
+        NoteEntity noteEntity = optionalNote.get();
+
+        if (!userService.getUser().getNotes().contains(noteEntity)) {
+            throw new NoteNotFoundException(id);
+        }
+
+        return noteMapper.mapEntityToDto(noteEntity);
     }
 
     public void updateNote(NoteDto noteDto) throws NoteNotFoundException {
@@ -50,7 +56,6 @@ public class NoteService {
                 .build())
         );
     }
-
 
     public void deleteById(UUID id) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
