@@ -1,6 +1,7 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
+import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -61,6 +62,10 @@ public class NoteService {
     }
 
     public boolean canShare(NoteDto noteDto) {
-        return noteDto.getAccessType() != AccessType.PRIVATE;
+        boolean isPrivate = noteDto.getAccessType() == AccessType.PRIVATE;
+        boolean userExists = userService.getUser() != null;
+        boolean isUserOwner = userExists && userService.getUser().getId().equals(noteDto.getUserId());
+
+        return !isPrivate || (userExists && isUserOwner);
     }
 }
