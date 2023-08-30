@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -59,20 +60,27 @@ public class NoteController {
     public ModelAndView saveNoteChanges(@ModelAttribute NoteDto note) throws NoteNotFoundException {
         noteService.updateNote(note);
         return new ModelAndView("redirect:/note/list");
-    } // need to secure
+    }
 
     @PostMapping("/delete")
     public ModelAndView deleteNote(@RequestParam UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
         return new ModelAndView("redirect:/note/list");
-    } // need to secure
+    }
 
     @GetMapping("/share")
     public ModelAndView showShareNoteForm(@RequestParam UUID id) throws NoteNotFoundException {
         NoteDto noteDto = noteService.getById(id);
-        UserDto userDto = userService.getById(noteDto.getUserId());
-        return new ModelAndView("note/share")
-                .addObject("note", noteDto)
-                .addObject("username", userDto.getUsername());
-    } // need to secure
+
+        if (noteService.canShare(noteDto)) {
+            UserDto userDto = userService.getById(noteDto.getUserId());
+            return new ModelAndView("note/share")
+                    .addAllObjects(Map.of(
+                            "note", noteDto,
+                            "username", userDto.getUsername())
+                    );
+        }
+
+        return new ModelAndView("error/404");
+    }
 }

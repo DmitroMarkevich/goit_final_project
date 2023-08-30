@@ -18,9 +18,6 @@ public class UserControllerTest {
     private UserController userController;
 
     @Mock
-    private UserValidator userValidator;
-
-    @Mock
     private UserService userService;
 
     private MockMvc mockMvc;

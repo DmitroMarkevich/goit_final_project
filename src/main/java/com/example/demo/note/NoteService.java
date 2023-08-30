@@ -47,8 +47,7 @@ public class NoteService {
     }
 
     public void updateNote(NoteDto noteDto) throws NoteNotFoundException {
-        noteRepository.save(noteMapper.mapDtoToEntity(getById(noteDto.getId())
-                .toBuilder()
+        noteRepository.save(noteMapper.mapDtoToEntity(getById(noteDto.getId()).toBuilder()
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .title(noteDto.getTitle())
                 .content(noteDto.getContent())
@@ -58,12 +57,10 @@ public class NoteService {
     }
 
     public void deleteById(UUID id) throws NoteNotFoundException {
-        Optional<NoteEntity> optionalNote = noteRepository.findById(id);
+        noteRepository.delete(noteMapper.mapDtoToEntity(getById(id)));
+    }
 
-        if (optionalNote.isPresent()) {
-            noteRepository.delete(optionalNote.get());
-        } else {
-            throw new NoteNotFoundException(id);
-        }
+    public boolean canShare(NoteDto noteDto) {
+        return noteDto.getAccessType() != AccessType.PRIVATE;
     }
 }
