@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,11 @@ public class UserService implements UserDetailsService {
         }
 
         return new UserDto();
+    }
+
+    public Optional<UserDto> getUserById(UUID id) {
+        return userRepository.findById(id)
+                .map(userMapper::mapEntityToDto);
     }
 
     public UserDto getUser() {

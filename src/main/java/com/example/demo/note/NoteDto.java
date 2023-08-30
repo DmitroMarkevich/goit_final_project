@@ -15,4 +15,6 @@ public class NoteDto {
     private String content;
     private AccessType accessType;
     private UUID userId;
+    private String username;
+    private Boolean editable;
 }

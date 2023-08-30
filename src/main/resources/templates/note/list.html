@@ -42,11 +42,13 @@
                     <div class="card-body col-9">
                         <h5 class="card-title" th:text="'Title: ' + ${note.title}"></h5>
                         <p class="card-text" th:text="'Content: ' + ${note.content}"></p>
+                        <p class="card-text" th:text="'Author: ' + ${note.username}"></p>
                     </div>
                     <div class="card-footer bg-transparent d-flex justify-content-between">
                         <button class="access-type btn btn-sm btn-outline-secondary"
                                 th:text="${note.accessType}"></button>
-                        <ul class="list-group list-group-horizontal justify-content-end">
+                        <ul class="list-group list-group-horizontal justify-content-end"
+                            th:if="${note.editable}">
                             <li class="list-group-item">
                                 <a th:href="'/note/edit?id='+${note.id}" type="button" class="edit" title="Edit"
                                    data-toggle="tooltip">

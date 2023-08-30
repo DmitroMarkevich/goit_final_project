@@ -1,15 +1,17 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
+import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +21,13 @@ public class NoteService {
     private final NoteMapper noteMapper;
 
     public List<NoteDto> getAllNotes() {
-        return noteMapper.mapListEntityToDto(userService.getUser().getNotes());
+        UserDto userDto = userService.getUser();
+        Stream<NoteDto> myNotesStream = noteMapper.mapListEntityToDto(userDto.getNotes()).stream()
+                .peek(note -> note.setEditable(true));
+        Stream<NoteDto> allPublicNotesStream = noteMapper.mapListEntityToDto(noteRepository.findByAccessTypeAndUserIdIsNot(AccessType.PUBLIC, userDto.getId())).stream()
+                .peek(note -> note.setEditable(false));
+        return Stream.concat(myNotesStream, allPublicNotesStream)
+                .collect(Collectors.toList());
     }
 
     public void createNote(NoteDto noteDto) {

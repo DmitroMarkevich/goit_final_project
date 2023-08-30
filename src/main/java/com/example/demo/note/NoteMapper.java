@@ -1,12 +1,19 @@
 package com.example.demo.note;
 
+import com.example.demo.user.UserDto;
+import com.example.demo.user.UserService;
 import com.example.demo.utils.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class NoteMapper implements Mapper<NoteDto, NoteEntity> {
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public NoteDto mapEntityToDto(NoteEntity source) {
         return NoteDto.builder()
@@ -17,6 +24,9 @@ public class NoteMapper implements Mapper<NoteDto, NoteEntity> {
                 .content(source.getContent())
                 .accessType(source.getAccessType())
                 .userId(source.getUserId())
+                .username(userService.getUserById(source.getUserId())
+                        .map(UserDto::getUsername)
+                        .orElse(""))
                 .build();
     }
 
