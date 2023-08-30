@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 @Table(name = "note")
 public class NoteEntity {
     @Id
