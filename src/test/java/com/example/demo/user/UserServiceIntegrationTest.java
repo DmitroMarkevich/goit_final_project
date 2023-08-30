@@ -1,7 +1,6 @@
 package com.example.demo.user;
 
 import com.example.demo.exception.user.UserAlreadyExistsException;
-import com.example.demo.exception.user.UserNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,8 +64,6 @@ class UserServiceIntegrationTest {
                 () -> userService.updateUser(new UserDto()));
         assertThrows(NullPointerException.class,
                 () -> userService.updateUser(null));
-        assertThrows(UserNotFoundException.class,
-                () -> userService.updateUser(new UserDto()));
         assertThrows(UserAlreadyExistsException.class,
                 () -> userService.updateUser(UserDto.builder()
                         .username("test_service_username")

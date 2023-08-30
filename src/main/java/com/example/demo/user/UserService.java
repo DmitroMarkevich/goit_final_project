@@ -37,18 +37,16 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto updateUser(UserDto userDto) {
-        String username = userDto.getUsername();
+        Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
-        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
-            UserEntity.UserEntityBuilder userBuilder = optionalUser.get().toBuilder()
+            return userMapper.mapEntityToDto(userRepository.save(optionalUser.get().toBuilder()
                     .email(userDto.getEmail())
                     .firstName(userDto.getFirstName())
                     .lastName(userDto.getLastName())
                     .password(passwordEncoder.encode(userDto.getPassword()))
-                    .updatedAt(new Timestamp(System.currentTimeMillis()));
-
-            return userMapper.mapEntityToDto(userRepository.save(userBuilder.build()));
+                    .updatedAt(new Timestamp(System.currentTimeMillis())).build())
+            );
         }
 
         return new UserDto();
