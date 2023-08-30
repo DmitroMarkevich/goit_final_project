@@ -1,11 +1,17 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
+import com.example.demo.user.UserDto;
+import com.example.demo.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
@@ -16,6 +22,7 @@ import java.util.UUID;
 public class NoteController {
     private final NoteValidator noteValidator;
     private final NoteService noteService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public ModelAndView listNotes() {
@@ -61,7 +68,11 @@ public class NoteController {
     } // need to secure
 
     @GetMapping("/share")
-    public ModelAndView showShareNoteForm(@RequestParam UUID id) {
-        return new ModelAndView(/* test */);
+    public ModelAndView showShareNoteForm(@RequestParam UUID id) throws NoteNotFoundException {
+        NoteDto noteDto = noteService.getById(id);
+        UserDto userDto = userService.getById(noteDto.getUserId());
+        return new ModelAndView("note/share")
+                .addObject("note", noteDto)
+                .addObject("username", userDto.getUsername());
     } // need to secure
 }

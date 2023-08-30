@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +65,11 @@ public class UserService implements UserDetailsService {
 
     public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public UserDto getById(UUID id) {
+        return userRepository.findById(id)
+                .map(userMapper::mapEntityToDto)
+                .orElseThrow();
     }
 }
