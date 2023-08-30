@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,7 +27,7 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
@@ -58,6 +59,7 @@ public class UserControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/settings"));
     }
+
     @Test
     public void testUpdateAccountInvalid() throws Exception {
         UserDto mockUserDto = new UserDto();
@@ -72,7 +74,7 @@ public class UserControllerTest {
                         .param("firstName", "ValidFirstName")
                         .param("lastName", "ValidLastName"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/user/settings")); 
+                .andExpect(redirectedUrl("/user/settings"));
     }
 }
 
