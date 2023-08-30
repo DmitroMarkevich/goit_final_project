@@ -1,7 +1,6 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
-import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 

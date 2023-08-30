@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class UserDto {
     private UUID id;
     private Timestamp createdAt;
