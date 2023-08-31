@@ -6,10 +6,10 @@ Notes is an application to create and share notes among users.
 - Authorization and Registration an acсount;
 - Creating, updating and sharing notes;
 
-### **Сonfiguration**
+### **How to run**
 описати як запустити настроїт ита запустити 
 
-### **Technologies**
+### **Config**
 - Java 17
 - Gradle
 - Spring boot (Core, MVC, Security, Data, Mail Sender)
