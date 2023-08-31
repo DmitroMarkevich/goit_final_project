@@ -9,6 +9,7 @@
 
 ### **Technologies**
 - Java 17
+- Gradle
 - Spring boot (Core,MVC,Security,Data)
 - H2(in Memory), PostgreSQL
 - Flyway 
