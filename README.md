@@ -15,3 +15,5 @@
 - Flyway 
 - JUnit, Mockito
 - Thymeleaf, HTML, JavaScript, Bootstrap
+- E-Mail
+
