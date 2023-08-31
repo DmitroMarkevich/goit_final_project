@@ -1,4 +1,6 @@
 # **Notes**
+### **About**
+Notes is an application to create and share notes among users. 
 
 ### **Key Functions**
 - Authorization and Registration an acсount;
