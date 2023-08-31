@@ -10,10 +10,10 @@
 ### **Technologies**
 - Java 17
 - Gradle
-- Spring boot (Core,MVC,Security,Data)
+- Spring boot (Core, MVC, Security, Data, Mail Sender)
 - H2(in Memory), PostgreSQL
 - Flyway 
 - JUnit, Mockito
 - Thymeleaf, HTML, JavaScript, Bootstrap
-- E-Mail
+l
 
