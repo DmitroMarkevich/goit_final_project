@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
         );
 
         emailExecutor.submit(() -> {
-            emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered");
+            emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered!");
         });
     }
 
@@ -50,6 +50,11 @@ public class UserService implements UserDetailsService {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isPresent()) {
+
+            emailExecutor.submit(() -> {
+                emailService.sendEmail(userDto.getEmail(), "Updating settings", "Your account successfully updated!");
+            });
+
             return userMapper.mapEntityToDto(userRepository.save(optionalUser.get().toBuilder()
                     .email(userDto.getEmail())
                     .firstName(userDto.getFirstName())
