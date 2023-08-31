@@ -28,29 +28,29 @@
 </header>
 <div class="container col-md-12 col-xl-4">
     <h1 class="my-3" th:text="${editUser?.username} + ' account settings'">Heading</h1>
-    <form th:action="@{/account/update}" method="post">
+    <form th:action="@{/user/update}" method="post">
         <div class="mb-3">
             <label class="form-label" for="username">Username</label>
-            <input type="text" id="username" class="form-control form-control-lg" th:value="${editUser?.username}" readonly>
+            <input type="text" id="username" name="username" class="form-control form-control-lg" th:value="${editUser?.username}" readonly>
         </div>
         <div class="mb-3">
             <label class="form-label" for="email">Email address</label>
-            <input type="email" id="email" class="form-control form-control-lg"
+            <input type="email" id="email" name="email" class="form-control form-control-lg"
                    placeholder="Enter a valid email address" required minlength="5" maxlength="50" th:value="${editUser?.email}">
         </div>
         <div class="mb-3">
             <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" class="form-control form-control-lg"
+            <input type="password" id="password" name="password" class="form-control form-control-lg"
                    placeholder="Enter new password" minlength="8" maxlength="100">
         </div>
         <div class="mb-3">
             <label class="form-label" for="name">First name (Optional)</label>
-            <input type="text" id="name" class="form-control form-control-lg"
+            <input type="text" id="name" name="firstName" class="form-control form-control-lg"
                    placeholder="Enter your name" th:value="${editUser?.firstName}">
         </div>
         <div class="mb-3">
             <label class="form-label" for="lastname">Last name (Optional)</label>
-            <input type="text" id="lastname" class="form-control form-control-lg"
+            <input type="text" id="lastname" name="lastName" class="form-control form-control-lg"
                    placeholder="Enter your last name" th:value="${editUser?.lastName}">
         </div>
         <div class="text-center text-lg-start mt-4 pt-2">
