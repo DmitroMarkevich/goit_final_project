@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import com.example.demo.mail.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -20,6 +21,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final EmailService emailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -35,6 +37,7 @@ public class UserService implements UserDetailsService {
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .build()
         );
+        emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered");
     }
 
     public UserDto updateUser(UserDto userDto) {
