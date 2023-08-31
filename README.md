@@ -17,5 +17,6 @@ Notes is an application to create and share notes among users.
 - Flyway 
 - JUnit, Mockito
 - Thymeleaf, HTML, JavaScript, Bootstrap
-l
+
+
 
