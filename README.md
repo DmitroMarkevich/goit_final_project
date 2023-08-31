@@ -7,5 +7,10 @@
 ### **Сonfiguration**
 описати як запустити настроїт ита запустити 
 
-
- 
+### **Technologies**
+- Java 17
+- Spring boot (Core,MVC,Security,Data)
+- H2(in Memory), PostgreSQL
+- Flyway 
+- JUnit, Mockito
+- Thymeleaf, HTML, JavaScript, Bootstrap
