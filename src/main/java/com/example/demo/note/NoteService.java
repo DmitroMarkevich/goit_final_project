@@ -39,7 +39,7 @@ public class NoteService {
 
         NoteEntity noteEntity = optionalNote.get();
 
-        if (!userService.getById(noteEntity.getUserId()).getNotes().contains(noteEntity)) {
+        if (!userService.getUser().getNotes().contains(noteEntity)) {
             throw new NoteNotFoundException(id);
         }
 
