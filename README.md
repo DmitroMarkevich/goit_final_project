@@ -1,6 +1,6 @@
 # **Notes**
 
 ### **Key Functions**
-#### 1. Creating user acoount;
-#### 2. Crating, updating and sharing notes;
-#### 3.
+#### 1. Authorization and Registration an acсount;
+#### 2. Creating, updating and sharing notes;
+#### 3. 
