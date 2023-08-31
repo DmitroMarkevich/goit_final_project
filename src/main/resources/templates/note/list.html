@@ -42,6 +42,9 @@
                     <div class="card-body col-9">
                         <h5 class="card-title" th:text="'Title: ' + ${note.title}"></h5>
                         <p class="card-text" th:text="'Content: ' + ${note.content}"></p>
+                        <p class="card-text" th:text="'Created at: ' + ${#dates.format(note.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
+                        <p class="card-text" th:if="${note.updatedAt != null}"
+                           th:text="'Updated at: ' + ${#dates.format(note.updatedAt, 'dd-MM-yyyy HH:mm')}"></p>
                     </div>
                     <div class="card-footer bg-transparent d-flex justify-content-between">
                         <button class="access-type btn btn-sm btn-outline-secondary"
