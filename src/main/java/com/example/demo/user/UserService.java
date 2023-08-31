@@ -14,6 +14,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final EmailService emailService;
+    private final ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -37,7 +40,10 @@ public class UserService implements UserDetailsService {
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .build()
         );
-        emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered");
+
+        emailExecutor.submit(() -> {
+            emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered");
+        });
     }
 
     public UserDto updateUser(UserDto userDto) {
