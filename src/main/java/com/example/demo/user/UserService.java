@@ -47,11 +47,8 @@ public class UserService implements UserDetailsService {
     public UserDto updateUser(UserDto userDto) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
-        if (optionalUser.isPresent()) {
-
-            emailExecutor.submit(() -> {
-                emailService.sendEmail(userDto.getEmail(), "Updating settings", "Your account successfully updated!");
-            });
+        if (optionalUser.isPresent() && optionalUser.get().getId().equals(userDto.getId())) {
+            emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Updating settings", "Your account successfully updated!"));
 
             return userMapper.mapEntityToDto(userRepository.save(optionalUser.get().toBuilder()
                     .email(userDto.getEmail())

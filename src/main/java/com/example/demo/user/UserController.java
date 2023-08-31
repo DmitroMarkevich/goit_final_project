@@ -28,7 +28,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");
         } else {
-            userService.updateUser(userDto);
+            System.out.println(userService.updateUser(userDto));
             modelAndView.setViewName("redirect:/user/settings");
         }
 
