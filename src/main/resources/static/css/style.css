@@ -85,3 +85,13 @@ i.material-icons {
     font-size: 20px;
     line-height: inherit;
 }
+
+header a {
+    text-decoration: none;
+}
+
+input[readonly] {
+    background-color: #efefef;
+    pointer-events: none;
+    cursor: default;
+}
