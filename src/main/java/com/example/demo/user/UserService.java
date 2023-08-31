@@ -1,6 +1,6 @@
 package com.example.demo.user;
 
-import com.example.demo.mail.EmailService;
+import com.example.demo.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -41,9 +41,7 @@ public class UserService implements UserDetailsService {
                 .build()
         );
 
-        emailExecutor.submit(() -> {
-            emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered!");
-        });
+        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered"));
     }
 
     public UserDto updateUser(UserDto userDto) {
