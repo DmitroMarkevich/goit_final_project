@@ -1,4 +1,4 @@
-# Notes
+# **Notes**
 
 ## **Key Functions**
 ## 1. Creating user acoount;
