@@ -16,13 +16,13 @@
     <main class="bd-main">
         <div class="card">
             <div class="card-body col-9">
-                <h5 class="card-title" th:text="'Title: ' + ${note.title}"></h5>
-                <p class="card-text" th:text="'Content: ' + ${note.content}"></p>
+                <h5 class="card-title" th:text="'Title: ' + ${title}"></h5>
+                <p class="card-text" th:utext="'Content: ' + ${content}"></p>
                 <p class="card-text" th:text="'Author: ' + ${username}"></p>
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <button class="access-type btn btn-sm btn-outline-secondary"
-                        th:text="${note.accessType}"></button>
+                        th:text="${accessType}"></button>
             </div>
         </div>
     </main>
