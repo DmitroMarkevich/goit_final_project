@@ -8,7 +8,7 @@ Notes is an application to create and share notes among users.
 
 ### **How to run**
 ```application.properties       ```-  use as DEV with H2 DB </br>
-```application-prod.properties ```-  use as PRODUCT with PostgreSQL 
+```application-prod.properties  ```-  use as PRODUCT with PostgreSQL 
 ```
 1.Add this code in the build.gradle file:
 bootRun {
@@ -21,11 +21,11 @@ OR
 
 1.Create environment variables:
 ```
-${DB_URL}    ->  DB url;
-${DB_USERNAME}         ->  DB user;
-${DB_PASSWORD}     ->  DB password;
-${MAIL_USERNAME}     -> Email;
-${MAIL_PASSWORD}    -> Email password;
+${DB_URL}        ->  DB url;
+${DB_USERNAME}   ->  DB user;
+${DB_PASSWORD}   ->  DB password;
+${MAIL_USERNAME} -> Email;
+${MAIL_PASSWORD} -> Email password;
 ```
 
 Example for Windows, run  CMD and execute commands:
@@ -52,8 +52,5 @@ DB_PASSWORD = 12345
 - Flyway
 - Hibernate 
 - JUnit, Mockito
-- Java Mail Sender
 - Thymeleaf, HTML, JavaScript, Bootstrap
-
-
-
+- Java Mail Sender
