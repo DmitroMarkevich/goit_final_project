@@ -24,8 +24,8 @@ OR
 ${DB_URL}        ->  DB url;
 ${DB_USERNAME}   ->  DB user;
 ${DB_PASSWORD}   ->  DB password;
-${MAIL_USERNAME} -> Email;
-${MAIL_PASSWORD} -> Email password;
+${MAIL_USERNAME} ->  Email;
+${MAIL_PASSWORD} ->  Email password;
 ```
 
 Example for Windows, run  CMD and execute commands:
