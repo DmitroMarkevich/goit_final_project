@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    private final UserValidator userValidator;
     private final UserService userService;
 
     @GetMapping("/settings")
@@ -22,8 +21,6 @@ public class UserController {
     @PostMapping("/update")
     public ModelAndView updateAccount(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-
-        userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");

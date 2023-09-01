@@ -23,7 +23,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/note")
 public class NoteController {
-    private final NoteValidator noteValidator;
     private final NoteService noteService;
     private final UserService userService;
     private final HtmlService htmlService;
@@ -47,8 +46,6 @@ public class NoteController {
     @PostMapping("/create")
     public ModelAndView createNote(@ModelAttribute @Valid NoteDto note, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-
-        noteValidator.validate(note, bindingResult);
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");

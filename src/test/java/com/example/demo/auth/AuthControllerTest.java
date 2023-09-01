@@ -1,7 +1,6 @@
 package com.example.demo.auth;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
-import com.example.demo.user.UserValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
