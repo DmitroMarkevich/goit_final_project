@@ -38,12 +38,14 @@ public class NoteController {
             note.setContent(htmlContent);
         });
 
+        int allNotesSize = noteService.getAllNotes().size();
         int totalPages = notePage.getTotalPages();
         int nextPage = page < totalPages ? page + 1 : totalPages;
         int prevPage = page > 1 ? page - 1 : 1;
 
         return new ModelAndView("note/list")
                 .addObject("allNotes", allNotes)
+                .addObject("allNotesSize", allNotesSize)
                 .addObject("currentPage", page)
                 .addObject("totalPages", totalPages)
                 .addObject("nextPage", nextPage)
