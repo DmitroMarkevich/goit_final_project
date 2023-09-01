@@ -14,7 +14,8 @@ Notes is an application to create and share notes among users.
 - Gradle
 - Spring boot (Core, MVC, Security, Data, Mail Sender)
 - H2(in Memory), PostgreSQL
-- Flyway 
+- Flyway
+- Hibernate 
 - JUnit, Mockito
 - Thymeleaf, HTML, JavaScript, Bootstrap
 
