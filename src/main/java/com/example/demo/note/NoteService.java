@@ -4,6 +4,9 @@ import com.example.demo.exception.note.NoteNotFoundException;
 import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,6 +24,18 @@ public class NoteService {
     public List<NoteDto> getAllNotes() {
         return noteMapper.mapListEntityToDto(userService.getUser().getNotes());
     }
+
+    public Page<NoteDto> getNotesByPage(int page, int pageSize) {
+        List<NoteDto> allNotes = getAllNotes();
+        return paginate(allNotes, page, pageSize);
+    }
+
+    private Page<NoteDto> paginate(List<NoteDto> notes, int page, int pageSize) {
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, notes.size());
+        return new PageImpl<>(notes.subList(startIndex, endIndex), PageRequest.of(page - 1, pageSize), notes.size());
+    }
+
 
     public void createNote(NoteDto noteDto) {
         noteRepository.save(noteMapper.mapDtoToEntity(noteDto).toBuilder()
