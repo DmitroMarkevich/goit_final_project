@@ -30,9 +30,9 @@ links.forEach(link => {
 
 // Note delete alert
 function showDeleteAlert() {
-        if (confirm("Are you sure you want to delete this note?")) {
-            document.querySelector("form").submit();
-        } else {
-            event.preventDefault();
-        }
+    if (confirm("Are you sure you want to delete this note?")) {
+        document.querySelector("form").submit();
+    } else {
+        event.preventDefault();
+    }
 }
