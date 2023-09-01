@@ -1,0 +1,91 @@
+.dark-theme {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.dark-theme .error-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 80px;
+    text-align: center;
+}
+
+.dark-theme .error-container h1 {
+    margin-bottom: 10px;
+}
+
+.dark-theme .error-container p {
+    margin-bottom: 20px;
+    color: #6c757d;
+}
+
+.dark-theme #backButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dark-theme .total,
+.dark-theme .access-type {
+    pointer-events: none;
+    cursor: default !important;
+}
+
+.dark-theme .total:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.dark-theme .notes-counter,
+.dark-theme .create-note-form,
+.dark-theme .edit-note-form,
+.dark-theme .card {
+    margin: 5px;
+    padding: 20px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px #dadada;
+}
+
+.dark-theme .notes-counter:hover,
+.dark-theme .create-note-form:hover,
+.dark-theme .edit-note-form:hover,
+.dark-theme .card:hover {
+    box-shadow: 4px 4px 20px #dadada;
+    transition: .3s linear all;
+}
+
+.dark-theme .notes-counter .count-numbers {
+    font-size: 2rem;
+}
+
+.dark-theme a.edit {
+    color: #FFC107;
+}
+
+.dark-theme a.share {
+    color: #03A9F4;
+}
+
+.dark-theme .delete {
+    color: #E34724;
+}
+
+.dark-theme i.material-icons {
+    font-size: 20px;
+    line-height: inherit;
+}
+
+.dark-theme header a {
+    text-decoration: none;
+}
+
+.dark-theme input[readonly] {
+    background-color: #efefef;
+    pointer-events: none;
+    cursor: default;
+}
