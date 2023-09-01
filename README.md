@@ -7,41 +7,44 @@ Notes is an application to create and share notes among users.
 - Creating, updating and sharing notes;
 
 ### **How to run**
-```application.properties       ```-> use as DEFAULT    for DEV, TEST  build: configuration with H2 DB; </br>
-```application-prod.properties ```-> use as PRODUCTION for PRODUCTION build: configuration with PostgreSQL DB
+```application.properties       ```-  use as DEV with H2 DB </br>
+```application-prod.properties ```-  use as PRODUCT with PostgreSQL 
 ```
+1.Add this code in the build.gradle file:
 bootRun {
 jvmArgs = ["-Dspring.profiles.active=production"]
 }
 ```
 OR
-2.Run application with environment variable ```spring.profiles.active=production``` in your IDE:
+2.Run application with environment variable ```spring.profiles.active=prod``` in your IDE:
 ### DB CONNECTION CONFIGURATION AND SET ENVIRONMENT VARIABLES:
 
 1.Create environment variables:
 ```
-${NOTE_DB_USER}         =>  DB user;
-${NOTE_DB_PASSWORD}     =>  DB password;
+${DB_URL}    ->  DB url;
+${DB_USERNAME}         ->  DB user;
+${DB_PASSWORD}     ->  DB password;
+${MAIL_USERNAME}     -> Email;
+${MAIL_PASSWORD}    -> Email password;
 ```
 
 Example for Windows, run  CMD and execute commands:
 ```
-setx NOTE_DB_USER "user"
-setx NOTE_DB_PASSWORD "12345"
+setx DB_USERNAME "user"
+setx DB_PASSWORD "12345"
 ```
 Example for Linux, run  SH and execute commands:
 ```
-export NOTE_DB_USER='user'
-export NOTE_DB_PASSWORD='12345'
+export DB_USERNAME='user'
+export DB_PASSWORD='12345'
 ```
 For connection use defaults:
 ```
-NOTE_DB_USER = user
-NOTE_DB_PASSWORD = 12345
+DB_USERNAME = user
+DB_PASSWORD = 12345
 ```
-описати як запустити настроїт ита запустити 
 
-### **Config**
+### **Technologies**
 - Java 17
 - Gradle
 - Spring boot (Core, MVC, Security, Data, Mail Sender)
