@@ -29,6 +29,7 @@
 <div class="container col-md-12 col-xl-4">
     <h1 class="my-3" th:text="${editUser?.username} + ' account settings'">Heading</h1>
     <form th:action="@{/user/update}" method="post">
+        <input type="hidden" id="userId" name="id" th:value="${editUser?.id}">
         <div class="mb-3">
             <label class="form-label" for="username">Username</label>
             <input type="text" id="username" name="username" class="form-control form-control-lg" th:value="${editUser?.username}" readonly>

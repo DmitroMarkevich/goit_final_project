@@ -19,17 +19,13 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        if (!(target instanceof UserDto)) {
-            return;
+        if (target instanceof UserDto userDto) {
+            validateUsername(userDto.getUsername(), errors);
+            validateEmail(userDto.getEmail(), errors);
+            validatePassword(userDto.getPassword(), errors);
+
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email.empty", "Enter your e-mail!");
         }
-
-        UserDto userDto = (UserDto) target;
-
-        validateUsername(userDto.getUsername(), errors);
-        validateEmail(userDto.getEmail(), errors);
-        validatePassword(userDto.getPassword(), errors);
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email.empty", "Enter your e-mail!");
     }
 
     private void validateUsername(String username, Errors errors) {

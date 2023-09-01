@@ -28,10 +28,10 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");
         } else {
-            System.out.println(userService.updateUser(userDto));
+            userService.updateUser(userDto);
             modelAndView.setViewName("redirect:/user/settings");
         }
 
         return modelAndView;
-    } // need to secure
+    }
 }
