@@ -19,6 +19,8 @@ public class UserControllerTest {
 
     @Mock
     private UserService userService;
+    @Mock
+    private UserValidator userValidator;
 
     private MockMvc mockMvc;
 
@@ -74,4 +76,3 @@ public class UserControllerTest {
                 .andExpect(redirectedUrl("/user/settings"));
     }
 }
-

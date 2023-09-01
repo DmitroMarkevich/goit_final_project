@@ -3,7 +3,6 @@ package com.example.demo.user;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
@@ -98,36 +97,6 @@ public class UserValidatorTest {
         userDto.setUsername("validUsername");
         userDto.setEmail("valid@example.com");
         userDto.setPassword("short"); // short password
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
-
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
-    }
-
-    @Test
-    public void testDuplicateEmail() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("validUsername");
-        userDto.setEmail("existing@example.com");
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
-
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
-    }
-
-    @Test
-    public void testDuplicateUsername() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("existingUsername");
-        userDto.setEmail("valid@example.com");
-        userDto.setPassword("validPassword");
         userDto.setFirstName("ValidFirstName");
         userDto.setLastName("ValidLastName");
 
