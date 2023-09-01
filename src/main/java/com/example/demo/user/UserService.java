@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
                 .build()
         );
 
-        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered"));
+        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered!"));
     }
 
     public UserDto updateUser(UserDto userDto) {
