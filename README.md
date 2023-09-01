@@ -12,7 +12,7 @@ Notes is an application to create and share notes among users.
 ```
 1.Add this code in the build.gradle file:
 bootRun {
-jvmArgs = ["-Dspring.profiles.active=production"]
+jvmArgs = ["-Dspring.profiles.active=prod"]
 }
 ```
 OR
