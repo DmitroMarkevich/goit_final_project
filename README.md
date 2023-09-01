@@ -3,7 +3,7 @@
 Notes is an application to create and share notes among users. 
 
 ### **Key Functions**
-- Authorization and Registration an acсount;
+- Authorization and registration an acсount;
 - Creating, updating and sharing notes;
 
 ### **How to run**
