@@ -6,6 +6,7 @@ import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +29,25 @@ public class NoteController {
     private final HtmlService htmlService;
 
     @GetMapping("/list")
-    public ModelAndView listNotes() {
-        List<NoteDto> allNotes = noteService.getAllNotes();
+    public ModelAndView listNotes(@RequestParam(name = "page", defaultValue = "1") Integer page) {
+        Page<NoteDto> notePage = noteService.getNotesByPage(page, 2);
+        List<NoteDto> allNotes = notePage.getContent();
+
         allNotes.forEach(note -> {
             String htmlContent = htmlService.markdownToHtml(note.getContent());
             note.setContent(htmlContent);
         });
 
-        return new ModelAndView("note/list").addObject("allNotes", allNotes);
+        int totalPages = notePage.getTotalPages();
+        int nextPage = page < totalPages ? page + 1 : totalPages;
+        int prevPage = page > 1 ? page - 1 : 1;
+
+        return new ModelAndView("note/list")
+                .addObject("allNotes", allNotes)
+                .addObject("currentPage", page)
+                .addObject("totalPages", totalPages)
+                .addObject("nextPage", nextPage)
+                .addObject("prevPage", prevPage);
     }
 
     @GetMapping("/create")
