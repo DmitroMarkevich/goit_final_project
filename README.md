@@ -47,11 +47,12 @@ DB_PASSWORD = 12345
 ### **Technologies**
 - Java 17
 - Gradle
-- Spring boot (Core, MVC, Security, Data, Mail Sender)
+- Spring boot (Core, MVC, Security, Data)
 - H2(in Memory), PostgreSQL
 - Flyway
 - Hibernate 
 - JUnit, Mockito
+- Java Mail Sender
 - Thymeleaf, HTML, JavaScript, Bootstrap
 
 
