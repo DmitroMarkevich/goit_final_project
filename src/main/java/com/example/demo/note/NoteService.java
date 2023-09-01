@@ -30,7 +30,15 @@ public class NoteService {
         );
     }
 
-    public NoteDto getById(UUID id) throws NoteNotFoundException {
+    public NoteDto getNoteById(UUID id) throws NoteNotFoundException {
+        return getNoteByIdInternal(id, true);
+    }
+
+    public NoteDto getShareNote(UUID id) throws NoteNotFoundException {
+        return getNoteByIdInternal(id, false);
+    }
+
+    private NoteDto getNoteByIdInternal(UUID id, boolean checkAccess) throws NoteNotFoundException {
         Optional<NoteEntity> optionalNote = noteRepository.findById(id);
 
         if (optionalNote.isEmpty()) {
@@ -39,7 +47,11 @@ public class NoteService {
 
         NoteEntity noteEntity = optionalNote.get();
 
-        if (!userService.getUser().getNotes().contains(noteEntity)) {
+        if (checkAccess && !userService.getUser().getNotes().contains(noteEntity)) {
+            throw new NoteNotFoundException(id);
+        }
+
+        if (!checkAccess && noteEntity.getAccessType() != AccessType.PUBLIC) {
             throw new NoteNotFoundException(id);
         }
 
@@ -47,7 +59,7 @@ public class NoteService {
     }
 
     public void updateNote(NoteDto noteDto) throws NoteNotFoundException {
-        noteRepository.save(noteMapper.mapDtoToEntity(getById(noteDto.getId()).toBuilder()
+        noteRepository.save(noteMapper.mapDtoToEntity(getNoteById(noteDto.getId()).toBuilder()
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .title(noteDto.getTitle())
                 .content(noteDto.getContent())
@@ -57,14 +69,6 @@ public class NoteService {
     }
 
     public void deleteById(UUID id) throws NoteNotFoundException {
-        noteRepository.delete(noteMapper.mapDtoToEntity(getById(id)));
-    }
-
-    public boolean canShare(NoteDto noteDto) {
-        boolean isPrivate = noteDto.getAccessType() == AccessType.PRIVATE;
-        boolean userExists = userService.getUser() != null;
-        boolean isUserOwner = userExists && userService.getUser().getId().equals(noteDto.getUserId());
-
-        return !isPrivate || (userExists && isUserOwner);
+        noteRepository.delete(noteMapper.mapDtoToEntity(getNoteById(id)));
     }
 }
