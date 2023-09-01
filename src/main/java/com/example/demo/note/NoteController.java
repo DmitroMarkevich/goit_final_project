@@ -1,7 +1,7 @@
 package com.example.demo.note;
 
 import com.example.demo.exception.note.NoteNotFoundException;
-import com.example.demo.markdown.HtmlService;
+import com.example.demo.note.markdown.HtmlService;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import jakarta.validation.Valid;
@@ -62,7 +62,7 @@ public class NoteController {
 
     @GetMapping("/edit")
     public ModelAndView showEditNoteForm(@RequestParam UUID id) throws NoteNotFoundException {
-        return new ModelAndView("note/editor").addObject("editNote", noteService.getById(id));
+        return new ModelAndView("note/editor").addObject("editNote", noteService.getNoteById(id));
     }
 
     @PostMapping("/edit")
@@ -79,20 +79,18 @@ public class NoteController {
 
     @GetMapping("/share")
     public ModelAndView showShareNoteForm(@RequestParam UUID id) throws NoteNotFoundException {
-        NoteDto noteDto = noteService.getById(id);
+        NoteDto noteDto = noteService.getShareNote(id);
+
         String htmlContent = htmlService.markdownToHtml(noteDto.getContent());
 
-        if (noteService.canShare(noteDto)) {
-            UserDto userDto = userService.getById(noteDto.getUserId());
-            return new ModelAndView("note/share")
-                    .addAllObjects(Map.of(
-                            "title", noteDto.getTitle(),
-                            "username", userDto.getUsername(),
-                            "content", htmlContent,
-                            "accessType", noteDto.getAccessType())
-                    );
-        }
+        UserDto userDto = userService.getById(noteDto.getUserId());
 
-        return new ModelAndView("error/404");
+        return new ModelAndView("note/share")
+                .addAllObjects(Map.of(
+                        "title", noteDto.getTitle(),
+                        "username", userDto.getUsername(),
+                        "content", htmlContent,
+                        "accessType", noteDto.getAccessType())
+                );
     }
 }

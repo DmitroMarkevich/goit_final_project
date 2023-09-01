@@ -20,11 +20,11 @@ import java.util.concurrent.Executors;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+    private final ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final EmailService emailService;
-    private final ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     public UserDetails loadUserByUsername(String username) {

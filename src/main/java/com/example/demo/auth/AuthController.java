@@ -18,6 +18,11 @@ public class AuthController {
     private final UserValidator userValidator;
     private final UserService userService;
 
+    @GetMapping("/")
+    public ModelAndView redirectToNoteList() {
+        return new ModelAndView("redirect:/note/list");
+    }
+
     @GetMapping("/login")
     public ModelAndView showLoginForm() {
         return new ModelAndView("auth/login");
