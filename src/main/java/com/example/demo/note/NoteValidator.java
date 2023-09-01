@@ -18,12 +18,10 @@ public class NoteValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        if (!(target instanceof NoteDto noteDto)) {
-            return;
+        if (target instanceof NoteDto noteDto) {
+            validateContent(noteDto.getContent(), errors);
+            validateTitle(noteDto.getTitle(), errors);
         }
-
-        validateContent(noteDto.getContent(), errors);
-        validateTitle(noteDto.getTitle(), errors);
     }
 
     private void validateContent(String content, Errors errors) {

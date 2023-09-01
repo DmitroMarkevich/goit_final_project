@@ -12,12 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UserValidatorTest {
     @Mock
     private UserValidator userValidator;
-    private UserRepository userRepository;
 
     @BeforeEach
     public void setUp() {
-        userRepository = Mockito.mock(UserRepository.class);
-        userValidator = new UserValidator(userRepository);
+        userValidator = new UserValidator();
     }
 
     @Test
@@ -118,8 +116,6 @@ public class UserValidatorTest {
         userDto.setFirstName("ValidFirstName");
         userDto.setLastName("ValidLastName");
 
-        Mockito.when(userRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
-
         Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
         userValidator.validate(userDto, errors);
 
@@ -134,8 +130,6 @@ public class UserValidatorTest {
         userDto.setPassword("validPassword");
         userDto.setFirstName("ValidFirstName");
         userDto.setLastName("ValidLastName");
-
-        Mockito.when(userRepository.existsByUsername(Mockito.anyString())).thenReturn(true);
 
         Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
         userValidator.validate(userDto, errors);

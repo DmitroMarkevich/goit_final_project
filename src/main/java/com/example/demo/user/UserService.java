@@ -47,19 +47,30 @@ public class UserService implements UserDetailsService {
     public UserDto updateUser(UserDto userDto) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
-        if (optionalUser.isPresent()) {
+        if (optionalUser.isPresent() && getUser().getId().equals(userDto.getId())) {
+            UserDto existingUser = userMapper.mapEntityToDto(optionalUser.get());
 
-            emailExecutor.submit(() -> {
-                emailService.sendEmail(userDto.getEmail(), "Updating settings", "Your account successfully updated!");
-            });
+            if (!userDto.getEmail().equals(existingUser.getEmail())) {
+                boolean isEmailUsedByOtherUser = userRepository.existsByEmailAndIdNot(userDto.getEmail(), userDto.getId());
 
-            return userMapper.mapEntityToDto(userRepository.save(optionalUser.get().toBuilder()
+                if (isEmailUsedByOtherUser) {
+                    return null;
+                }
+            }
+
+            UserDto updatedUser = userMapper.mapEntityToDto(userRepository.save(UserEntity.builder()
+                    .id(existingUser.getId())
+                    .username(existingUser.getUsername())
                     .email(userDto.getEmail())
                     .firstName(userDto.getFirstName())
                     .lastName(userDto.getLastName())
                     .password(passwordEncoder.encode(userDto.getPassword()))
-                    .updatedAt(new Timestamp(System.currentTimeMillis())).build())
-            );
+                    .updatedAt(new Timestamp(System.currentTimeMillis()))
+                    .build()));
+
+            emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
+
+            return updatedUser;
         }
 
         return new UserDto();
