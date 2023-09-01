@@ -2,6 +2,7 @@ package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -94,5 +95,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id)
                 .map(userMapper::mapEntityToDto)
                 .orElseThrow();
+    }
+
+    public boolean isAuthenticated(Authentication authentication) {
+        return authentication != null && authentication.isAuthenticated();
     }
 }

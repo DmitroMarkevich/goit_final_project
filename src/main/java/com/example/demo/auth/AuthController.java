@@ -5,6 +5,7 @@ import com.example.demo.user.UserService;
 import com.example.demo.user.UserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +25,20 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ModelAndView showLoginForm() {
+    public ModelAndView showLoginForm(Authentication authentication) {
+        if (userService.isAuthenticated(authentication)) {
+            return new ModelAndView("redirect:/note/list");
+        }
+
         return new ModelAndView("auth/login");
     }
 
-    @PostMapping("/login")
-    public ModelAndView loginSubmit() {
-        return new ModelAndView("redirect:/note/list");
-    }
-
     @GetMapping("/register")
-    public ModelAndView showRegistrationForm() {
+    public ModelAndView showRegistrationForm(Authentication authentication) {
+        if (userService.isAuthenticated(authentication)) {
+            return new ModelAndView("redirect:/note/list");
+        }
+
         return new ModelAndView("auth/register");
     }
 
