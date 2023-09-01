@@ -36,10 +36,10 @@
 </header>
 <div class="container mb-3">
     <main class="bd-main">
-        <h1 class="my-5" th:if="${allNotes.size() == 0}">It's Empty Here</h1>
-        <h1 class="my-5" th:unless="${allNotes.size() == 0}">My Notes <span class="badge text-bg-danger ms-2"
-                                                                            th:text="${allNotes.size()}"
-                                                                            style="font-size: 45%; vertical-align: 25%;"></span>
+        <h1 class="my-5" th:if="${allNotesSize == 0}">It's Empty Here</h1>
+        <h1 class="my-5" th:unless="${allNotesSize == 0}">My Notes <span class="badge text-bg-danger ms-2"
+                                                                         th:text="${allNotesSize}"
+                                                                         style="font-size: 45%; vertical-align: 25%;"></span>
         </h1>
         <ul class="list-group">
             <li class="list-group-item" th:each="note : ${allNotes}">
