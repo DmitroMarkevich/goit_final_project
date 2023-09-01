@@ -2,7 +2,6 @@ package com.example.demo.auth;
 
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
-import com.example.demo.user.UserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserValidator userValidator;
     private final UserService userService;
 
     @GetMapping("/")
@@ -45,8 +43,6 @@ public class AuthController {
     @PostMapping("/register")
     public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-
-        userValidator.validate(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");
