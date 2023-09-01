@@ -67,7 +67,10 @@ public class UserService implements UserDetailsService {
                     .lastName(userDto.getLastName())
                     .password(passwordEncoder.encode(userDto.getPassword()))
                     .updatedAt(new Timestamp(System.currentTimeMillis()))
+                    .notes(existingUser.getNotes())
                     .build()));
+
+            System.out.println(updatedUser);
 
             emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
 
