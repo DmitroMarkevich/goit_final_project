@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
-import com.example.demo.exception.user.EmailIsUsedException;
+import com.example.demo.exception.user.EmailAlreadyUsedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
         return createdUser;
     }
 
-    public UserDto updateUser(UserDto userDto) {
+    public UserDto updateUser(UserDto userDto) throws EmailAlreadyUsedException {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isEmpty()) {
@@ -56,12 +56,13 @@ public class UserService implements UserDetailsService {
         }
 
         UserDto existingUser = userMapper.mapEntityToDto(optionalUser.get());
+        String emailUser = userDto.getEmail();
 
-        if (!userDto.getEmail().equals(existingUser.getEmail())) {
+        if (!emailUser.equals(existingUser.getEmail())) {
             boolean isEmailUsedByOtherUser = userRepository.existsByEmailAndIdNot(userDto.getEmail(), userDto.getId());
 
             if (isEmailUsedByOtherUser) {
-                throw new EmailIsUsedException("The email is used by another user");
+                throw new EmailAlreadyUsedException(emailUser);
             }
         }
 
