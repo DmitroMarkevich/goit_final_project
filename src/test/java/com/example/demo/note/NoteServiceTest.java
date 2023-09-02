@@ -1,8 +1,6 @@
 package com.example.demo.note;
 
-import com.example.demo.exception.note.NoteNotFoundException;
 import com.example.demo.user.UserDto;
-import com.example.demo.user.UserEntity;
 import com.example.demo.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,25 +64,19 @@ class NoteServiceTest {
 
     @Test
     public void testCreateNote() {
-        // Prepare test data
         NoteDto noteDto = new NoteDto();
 
         when(userService.getUser()).thenReturn(user);
 
-        // Mock NoteMapper's behavior
         NoteEntity mappedEntity = new NoteEntity();
         when(noteMapper.mapDtoToEntity(noteDto)).thenReturn(mappedEntity);
 
-        // Call the method to be tested
         noteService.createNote(noteDto);
 
-        // Verify that methods were called with expected arguments
         ArgumentCaptor<NoteEntity> entityCaptor = ArgumentCaptor.forClass(NoteEntity.class);
         verify(noteRepository).save(entityCaptor.capture());
 
         NoteEntity savedEntity = entityCaptor.getValue();
         assertEquals(user.getId(), savedEntity.getUserId());
-        // Add more assertions for other fields if needed
     }
-
 }
