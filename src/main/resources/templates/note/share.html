@@ -12,17 +12,22 @@
     <title>Notes list</title>
 </head>
 <body class="d-flex flex-column h-100">
-<div class="container mb-3">
-    <main class="bd-main">
-        <div class="card">
-            <div class="card-body col-9">
-                <h5 class="card-title" th:text="'Title: ' + ${title}"></h5>
-                <p class="card-text" th:utext="'Content: ' + ${content}"></p>
-                <p class="card-text" th:text="'Author: ' + ${username}"></p>
+<header class="p-3 bg-dark text-white bd-navbar sticky-top">
+    <div class="container">
+        <h4 class="text-center">You are viewing a shared note</h4>
+    </div>
+</header>
+<div class="container mb-3 h-100">
+    <main class="bd-main row align-items-center justify-content-center h-100">
+        <div class="card col-8">
+            <div class="card-header py-4">
+                <h5 class="card-title mb-0" th:text="${title}"></h5>
             </div>
-            <div class="card-footer bg-transparent d-flex justify-content-between">
-                <button class="access-type btn btn-sm btn-outline-secondary"
-                        th:text="${accessType}"></button>
+            <div class="card-body">
+                <p class="card-text" th:utext="${content}"></p>
+            </div>
+            <div class="card-footer py-3">
+                <p class="card-text" th:text="'author: ' + ${username}"></p>
             </div>
         </div>
     </main>
