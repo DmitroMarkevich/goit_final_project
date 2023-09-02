@@ -10,8 +10,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Add new note</title>
+    <style id="themeStyles">
+    body.light-theme {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    body.dark-theme  {
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+body.dark-theme .edit-note-form {
+    background-color: #555;
+    color: #ccc;
+}
+
+body.dark-theme .edit-note-form input {
+    background-color: #444;
+    color: #ccc;
+}
+
+body.dark-theme .edit-note-form textarea,
+body.dark-theme textarea {
+    background-color: #444;
+}
+body.dark-theme #content {
+    background-color: #555;
+    color: #000;
+}
+</style>
 </head>
 <body class="d-flex flex-column h-100">
+<div class="theme-switch-container">
+    <div class="theme-switch">
+        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
+        <label for="themeSwitch" class="theme-switch-label"></label>
+    </div>
+</div>
 <div class="container">
     <div class="row pt-4 mb-4 text-center">
         <h1 class="mt-2">Add new note</h1>
@@ -56,6 +90,29 @@
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script>
     var simplemde = new SimpleMDE({element: document.getElementById("content")});
+</script>
+<script th:inline="javascript">
+    var currentTheme = localStorage.getItem("theme");
+
+    function setTheme(theme) {
+        document.body.className = theme + "-theme";
+        localStorage.setItem("theme", theme);
+    }
+
+    if (currentTheme) {
+        setTheme(currentTheme);
+        if (currentTheme === "dark") {
+            document.getElementById("themeSwitch").checked = true;
+        }
+    }
+
+    document.getElementById("themeSwitch").addEventListener("change", function () {
+        if (this.checked) {
+            setTheme("dark");
+        } else {
+            setTheme("light");
+        }
+    });
 </script>
 </body>
 </html>
