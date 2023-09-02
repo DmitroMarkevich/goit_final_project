@@ -30,7 +30,7 @@ public class NoteController {
 
     @GetMapping("/list")
     public ModelAndView listNotes(@RequestParam(name = "page", defaultValue = "1") Integer page) {
-        Page<NoteDto> notePage = noteService.getNotesByPage(page, 2);
+        Page<NoteDto> notePage = noteService.getNotesByPage(page, 4);
         List<NoteDto> allNotes = notePage.getContent();
 
         allNotes.forEach(note -> {
@@ -100,7 +100,9 @@ public class NoteController {
                 .addAllObjects(Map.of(
                         "title", noteDto.getTitle(),
                         "username", userDto.getUsername(),
-                        "content", htmlContent)
+                        "content", htmlContent,
+                        "createdAt", noteDto.getCreatedAt(),
+                        "updatedAt", noteDto.getUpdatedAt())
                 );
     }
 }
