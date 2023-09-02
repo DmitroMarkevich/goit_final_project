@@ -72,6 +72,7 @@ public class UserService implements UserDetailsService {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .password(passwordEncoder.encode(userDto.getPassword()))
+                .createdAt(userDto.getCreatedAt())
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .notes(existingUser.getNotes())
                 .build()));
