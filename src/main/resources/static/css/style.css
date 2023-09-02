@@ -118,3 +118,38 @@ input[readonly] {
     pointer-events: none;
     cursor: default;
 }
+.theme-switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    position: relative;
+    width: 50px;
+    height: 30px;
+}
+
+.theme-switch-input {
+    display: none;
+}
+
+.theme-switch-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: 90%;
+    background-color: #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.theme-switch-input:checked + .theme-switch-label {
+    background-color: #007bff;
+    left: 30px;
+}
+.theme-switch-input + .theme-switch-label {
+    background-color: #ccc;
+    left: 0;
+}
