@@ -1,6 +1,7 @@
 package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
+import com.example.demo.exception.user.EmailAlreadyUsedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,47 +36,51 @@ public class UserService implements UserDetailsService {
         return new User(userEntity.getUsername(), userEntity.getPassword(), List.of());
     }
 
-    public void createUser(UserDto userDto) {
-        userRepository.save(userMapper.mapDtoToEntity(userDto).toBuilder()
+    public UserDto createUser(UserDto userDto) {
+        UserDto createdUser = userMapper.mapEntityToDto(userRepository.save(userMapper.mapDtoToEntity(userDto).toBuilder()
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
                 .build()
-        );
+        ));
 
         emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered!"));
+
+        return createdUser;
     }
 
-    public UserDto updateUser(UserDto userDto) {
+    public UserDto updateUser(UserDto userDto) throws EmailAlreadyUsedException {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
-        if (optionalUser.isPresent() && getUser().getId().equals(userDto.getId())) {
-            UserDto existingUser = userMapper.mapEntityToDto(optionalUser.get());
-
-            if (!userDto.getEmail().equals(existingUser.getEmail())) {
-                boolean isEmailUsedByOtherUser = userRepository.existsByEmailAndIdNot(userDto.getEmail(), userDto.getId());
-
-                if (isEmailUsedByOtherUser) {
-                    return null;
-                }
-            }
-
-            UserDto updatedUser = userMapper.mapEntityToDto(userRepository.save(UserEntity.builder()
-                    .id(existingUser.getId())
-                    .username(existingUser.getUsername())
-                    .email(userDto.getEmail())
-                    .firstName(userDto.getFirstName())
-                    .lastName(userDto.getLastName())
-                    .password(passwordEncoder.encode(userDto.getPassword()))
-                    .updatedAt(new Timestamp(System.currentTimeMillis()))
-                    .notes(existingUser.getNotes())
-                    .build()));
-
-            emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
-
-            return updatedUser;
+        if (optionalUser.isEmpty()) {
+            throw new UsernameNotFoundException("User Not Found with username: " + userDto.getUsername());
         }
 
-        return new UserDto();
+        UserDto existingUser = userMapper.mapEntityToDto(optionalUser.get());
+        String emailUser = userDto.getEmail();
+
+        if (!emailUser.equals(existingUser.getEmail())) {
+            boolean isEmailUsedByOtherUser = userRepository.existsByEmailAndIdNot(userDto.getEmail(), userDto.getId());
+
+            if (isEmailUsedByOtherUser) {
+                throw new EmailAlreadyUsedException(emailUser);
+            }
+        }
+
+        UserDto updatedUser = userMapper.mapEntityToDto(userRepository.save(UserEntity.builder()
+                .id(existingUser.getId())
+                .username(existingUser.getUsername())
+                .email(userDto.getEmail())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .createdAt(userDto.getCreatedAt())
+                .updatedAt(new Timestamp(System.currentTimeMillis()))
+                .notes(existingUser.getNotes())
+                .build()));
+
+        emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
+
+        return updatedUser;
     }
 
     public UserDto getUser() {
