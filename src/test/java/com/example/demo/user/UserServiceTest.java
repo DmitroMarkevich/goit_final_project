@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
-import com.example.demo.exception.user.EmailIsUsedException;
+import com.example.demo.exception.user.EmailAlreadyUsedException;
 import com.example.demo.note.NoteEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,11 +105,11 @@ class UserServiceTest {
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(UserEntity.builder().email("old_test_email@test_email.com").build()));
         when(userRepository.existsByEmailAndIdNot(email, id)).thenReturn(true);
 
-        assertThrows(EmailIsUsedException.class, () -> userService.updateUser(UserDto.builder().id(id).username(username).email(email).build()));
+        assertThrows(EmailAlreadyUsedException.class, () -> userService.updateUser(UserDto.builder().id(id).username(username).email(email).build()));
     }
 
     @Test
-    void testUpdateUserHappyPath() {
+    void testUpdateUserHappyPath() throws EmailAlreadyUsedException {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         UUID id = UUID.randomUUID();
         String username = "test_username";

@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import com.example.demo.exception.user.EmailAlreadyUsedException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ModelAndView updateAccount(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
+    public ModelAndView updateAccount(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) throws EmailAlreadyUsedException {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
