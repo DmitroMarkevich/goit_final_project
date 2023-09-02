@@ -37,9 +37,9 @@
 <main class="bd-main mb-3">
     <div class="container">
         <section class="mb-5">
-            <h1 class="my-5 text-center" th:if="${allNotes.size() == 0}">It's Empty Here</h1>
-            <h1 class="my-5 text-center" th:unless="${allNotes.size() == 0}">My Notes <span class="badge text-bg-danger ms-2"
-                                                                                            th:text="${allNotes.size()}"
+            <h1 class="my-5 text-center" th:if="${allNotesSize == 0}">It's Empty Here</h1>
+            <h1 class="my-5 text-center" th:unless="${allNotesSize == 0}">My Notes <span class="badge text-bg-danger ms-2"
+                                                                                            th:text="${allNotesSize}"
                                                                                             style="font-size: 45%; vertical-align: 25%;"></span>
             </h1>
             <div class="row notes-list">
