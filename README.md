@@ -7,8 +7,8 @@ Notes is an application to create and share notes among users.
 - Creating, updating and sharing notes;
 
 ### **How to run**
-```application.properties       ```-  use as DEV with H2 DB </br>
-```application-prod.properties  ```-  use as PRODUCT with PostgreSQL 
+```application.properties     ``` -  use as DEV with H2 DB </br>
+```application-prod.properties``` -  use as PRODUCT with PostgreSQL 
 ```
 1.Add this code in the build.gradle file:
 bootRun {
