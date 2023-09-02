@@ -24,6 +24,7 @@ public class UserDto {
     @Size(min = 5, max = 50, message = "Username must be between 5 and 50 characters")
     private String username;
 
+    @Size(max = 50)
     @Email(message = "Invalid email format")
     @Pattern(regexp = "^.{5,}@.*$", message = "Email must have at least 5 characters before @")
     private String email;
