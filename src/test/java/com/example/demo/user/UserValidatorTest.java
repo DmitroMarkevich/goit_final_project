@@ -1,108 +1,95 @@
 package com.example.demo.user;
 
-import org.junit.jupiter.api.BeforeEach;
+import jakarta.validation.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Set;
 
 public class UserValidatorTest {
-    @Mock
-    private UserValidator userValidator;
-
-    @BeforeEach
-    public void setUp() {
-        userValidator = new UserValidator();
-    }
+    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
     public void testValidUserDto() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("validUsername");
-        userDto.setEmail("valid@example.com");
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
+        UserDto userDto = UserDto.builder()
+                .username("validUsername")
+                .email("alid3723@gmail.com")
+                .password("validPassword")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        assertEquals(0, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertTrue(violations.isEmpty());
     }
 
     @Test
     public void testInvalidShortUsername() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("abc"); //short name
-        userDto.setEmail("valid@example.com");
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
+        UserDto userDto = UserDto.builder()
+                .username("abc") // Short username
+                .email("alid3723@example.com")
+                .password("validPassword")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertFalse(violations.isEmpty());
     }
 
     @Test
     public void testInvalidLongUsername() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("veryVeryLongUsernameOfUser1234567890VeryVeryLongUsername"); //long name
-        userDto.setEmail("valid@example.com");
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
+        UserDto userDto = UserDto.builder()
+                .username("veryVeryLongUsernameOfUser1234567890VeryVeryLongUsername") // Long username
+                .email("alid3723@example.com")
+                .password("validPassword")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertFalse(violations.isEmpty());
     }
 
     @Test
     public void testInvalidEmailFormat() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("validUsername");
-        userDto.setEmail("invalidEmail"); // invalid email format
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
+        UserDto userDto = UserDto.builder()
+                .username("validUsername")
+                .email("invalidEmail")
+                .password("validPassword")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertFalse(violations.isEmpty());
     }
 
     @Test
     public void testInvalidEmailLength() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("validUsername");
-        userDto.setEmail("veryVeryLong1234567890veryVeryLong1234567890long@.com"); //long email
-        userDto.setPassword("validPassword");
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
+        UserDto userDto = UserDto.builder()
+                .username("validUsername")
+                .email("veryVeryLong1234567890veryVeryLong1234567890long@gmail.com")
+                .password("validPassword")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertFalse(violations.isEmpty());
     }
 
     @Test
     public void testInvalidPasswordLength() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("validUsername");
-        userDto.setEmail("valid@example.com");
-        userDto.setPassword("short"); // short password
-        userDto.setFirstName("ValidFirstName");
-        userDto.setLastName("ValidLastName");
+        UserDto userDto = UserDto.builder()
+                .username("validUsername")
+                .email("veryVeryLong1234567890veryVeryLong1234567890long@gmail.com")
+                .password("short")
+                .firstName("ValidFirstName")
+                .lastName("ValidLastName")
+                .build();
 
-        Errors errors = new BeanPropertyBindingResult(userDto, "userDto");
-        userValidator.validate(userDto, errors);
-
-        assertEquals(1, errors.getErrorCount());
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Assertions.assertFalse(violations.isEmpty());
     }
 }
