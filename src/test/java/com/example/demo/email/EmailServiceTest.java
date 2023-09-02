@@ -1,6 +1,5 @@
 package com.example.demo.email;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import static org.mockito.Mockito.verify;
 
 public class EmailServiceTest {
-
     private EmailService emailService;
 
     @Mock
