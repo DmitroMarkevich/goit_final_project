@@ -98,8 +98,7 @@ public class NoteController {
                 .addAllObjects(Map.of(
                         "title", noteDto.getTitle(),
                         "username", userDto.getUsername(),
-                        "content", htmlContent,
-                        "accessType", noteDto.getAccessType())
+                        "content", htmlContent)
                 );
     }
 }
