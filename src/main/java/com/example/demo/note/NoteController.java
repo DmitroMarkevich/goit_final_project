@@ -60,6 +60,7 @@ public class NoteController {
     @PostMapping("/create")
     public ModelAndView createNote(@ModelAttribute @Valid NoteDto note, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println(note);
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");
