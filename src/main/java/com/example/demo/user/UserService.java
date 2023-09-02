@@ -70,8 +70,6 @@ public class UserService implements UserDetailsService {
                     .notes(existingUser.getNotes())
                     .build()));
 
-            System.out.println(updatedUser);
-
             emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
 
             return updatedUser;
