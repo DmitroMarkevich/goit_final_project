@@ -3,6 +3,7 @@ package com.example.demo.auth;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,27 +13,27 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
 
 public class AuthControllerTest {
-//    @Test
-//    public void testShowLoginForm() {
-//        UserService userService = mock(UserService.class);
-//        AuthController authController = new AuthController(userService);
-//        ModelAndView modelAndView = authController.showLoginForm();
-//        assertEquals("auth/login", modelAndView.getViewName());
-//    }
-//
-//    @Test
-//    public void testLoginSubmit() {
-//        AuthController authController = new AuthController(null, null);
-//        ModelAndView modelAndView = authController.loginSubmit();
-//        assertEquals("redirect:/note/list", modelAndView.getViewName());
-//    }
+    @Test
+    public void testShowLoginForm() {
+        UserService userService = mock(UserService.class);
+        AuthController authController = new AuthController(userService);
 
-//    @Test
-//    public void testShowRegistrationForm() {
-//        AuthController authController = new AuthController(null, null);
-//        ModelAndView modelAndView = authController.showRegistrationForm();
-//        assertEquals("auth/register", modelAndView.getViewName());
-//    }
+        Authentication authentication = mock(Authentication.class);
+
+        ModelAndView modelAndView = authController.showLoginForm(authentication);
+        assertEquals("auth/login", modelAndView.getViewName());
+    }
+
+    @Test
+    public void testShowRegistrationForm() {
+        UserService userService = mock(UserService.class);
+        AuthController authController = new AuthController(userService);
+
+        Authentication authentication = mock(Authentication.class);
+
+        ModelAndView modelAndView = authController.showRegistrationForm(authentication);
+        assertEquals("auth/register", modelAndView.getViewName());
+    }
 
     @Test
     public void testRegisterUser_ValidUser() {

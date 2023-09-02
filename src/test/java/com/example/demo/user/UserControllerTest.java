@@ -70,7 +70,6 @@ public class UserControllerTest {
                         .param("password", "short")
                         .param("firstName", "ValidFirstName")
                         .param("lastName", "ValidLastName"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/user/settings"));
+                .andExpect(status().is2xxSuccessful());
     }
 }
