@@ -19,15 +19,26 @@
 </header>
 <div class="container mb-3 h-100">
     <main class="bd-main row align-items-center justify-content-center h-100">
-        <div class="card col-8">
+        <div class="card single-note col-8">
             <div class="card-header py-4">
-                <h5 class="card-title mb-0" th:text="${title}"></h5>
+                <h5 class="card-title mb-0 text-center" th:text="${title}"></h5>
             </div>
             <div class="card-body">
                 <p class="card-text" th:utext="${content}"></p>
             </div>
-            <div class="card-footer py-3">
-                <p class="card-text" th:text="'author: ' + ${username}"></p>
+            <div class="card-footer d-flex px-2">
+                <div class="col-4 d-flex align-items-center">
+                    <p class="card-text author">Author: <span th:text="${username}"></span></p>
+                </div>
+                <div class="col-4">
+                    <span class="note-date d-block mb-2"
+                          th:text="'Created: ' + ${#dates.format(createdAt, 'dd-MM-yyyy HH:mm')}"></span>
+                    <span class="note-date d-block" th:if="${updatedAt != null}"
+                          th:text="'Updated: ' + ${#dates.format(updatedAt, 'dd-MM-yyyy HH:mm')}"></span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <a th:href="@{/note/list}" type="button" class="btn btn-outline-primary m-1">Back to main</a>
+                </div>
             </div>
         </div>
     </main>

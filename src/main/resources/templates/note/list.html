@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -34,57 +34,67 @@
         </div>
     </div>
 </header>
-<div class="container mb-3">
-    <main class="bd-main">
-        <h1 class="my-5" th:if="${allNotesSize == 0}">It's Empty Here</h1>
-        <h1 class="my-5" th:unless="${allNotesSize == 0}">My Notes <span class="badge text-bg-danger ms-2"
-                                                                         th:text="${allNotesSize}"
-                                                                         style="font-size: 45%; vertical-align: 25%;"></span>
-        </h1>
-        <ul class="list-group">
-            <li class="list-group-item" th:each="note : ${allNotes}">
-                <div class="card">
-                    <div class="card-body col-9">
-                        <h5 class="card-title" th:text="'Title: ' + ${note.title}"></h5>
-                        <p class="card-text" th:utext="'Content: ' + ${note.content}"></p>
-                        <p class="card-text"
-                           th:text="'Created at: ' + ${#dates.format(note.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
-                        <p class="card-text" th:if="${note.updatedAt != null}"
-                           th:text="'Updated at: ' + ${#dates.format(note.updatedAt, 'dd-MM-yyyy HH:mm')}"></p>
-                    </div>
-                    <div class="card-footer bg-transparent d-flex justify-content-between">
-                        <button class="access-type btn btn-sm btn-outline-secondary"
-                                th:text="${note.accessType}"></button>
-                        <ul class="list-group list-group-horizontal justify-content-end">
-                            <li class="list-group-item">
-                                <a th:href="'/note/edit?id='+${note.id}" type="button" class="edit" title="Edit"
-                                   data-toggle="tooltip">
-                                    <i class="material-icons">&#xe254;</i>
-                                </a>
-                            </li>
-                            <li class="list-group-item" th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">
-                                <a th:href="'/note/share?id='+${note.id}" type="button" class="share" title="Share"
-                                   data-toggle="tooltip">
-                                    <i class="material-icons">&#xe80d;</i>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <form th:action="@{/note/delete}" method="post" class="d-inline-block">
-                                    <input type="hidden" name="id" th:value="${note.id}">
-                                    <button type="submit" class="delete btn p-0" title="Delete" data-toggle="tooltip"
-                                            onclick="showDeleteAlert('${note.id}');"><i
-                                            class="material-icons">&#xe872;</i>
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+<main class="bd-main mb-3">
+    <div class="container">
+        <section class="mb-5">
+            <h1 class="my-5 text-center" th:if="${allNotes.size() == 0}">It's Empty Here</h1>
+            <h1 class="my-5 text-center" th:unless="${allNotes.size() == 0}">My Notes <span class="badge text-bg-danger ms-2"
+                                                                                            th:text="${allNotes.size()}"
+                                                                                            style="font-size: 45%; vertical-align: 25%;"></span>
+            </h1>
+            <div class="row notes-list">
+                <div class="col-lg-6 mb-4" th:each="note : ${allNotes}">
+                    <div class="card single-note h-100">
+                        <div class="card-header py-4">
+                            <h5 class="card-title mb-0 text-center" th:text="${note.title}"></h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" th:utext="${note.content}"></p>
+                        </div>
+                        <div class="card-footer d-flex px-2">
+                            <div class="col-2 d-flex">
+                                <span class="badge bg-success d-flex align-items-center" th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">public</span>
+                                <span class="badge bg-danger d-flex align-items-center" th:if="${#strings.equalsIgnoreCase(note.accessType, 'private')}">private</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="note-date d-block mb-2"
+                                      th:text="'Created: ' + ${#dates.format(note.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
+                                <span class="note-date d-block" th:if="${note.updatedAt != null}"
+                                      th:text="'Updated: ' + ${#dates.format(note.updatedAt, 'dd-MM-yyyy HH:mm')}"></span>
+                            </div>
+                            <div class="col-4">
+                                <ul class="list-group list-group-horizontal justify-content-end card-buttons">
+                                    <li class="list-group-item bg-transparent">
+                                        <a th:href="'/note/edit?id='+${note.id}" type="button" class="edit" title="Edit"
+                                           data-toggle="tooltip">
+                                            <i class="material-icons">&#xe254;</i>
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item bg-transparent" th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">
+                                        <a th:href="'/note/share?id='+${note.id}" type="button" class="share" title="Share"
+                                           data-toggle="tooltip">
+                                            <i class="material-icons">&#xe80d;</i>
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item bg-transparent">
+                                        <form th:action="@{/note/delete}" method="post" class="d-inline-block">
+                                            <input type="hidden" name="id" th:value="${note.id}">
+                                            <button type="submit" class="delete btn p-0" title="Delete" data-toggle="tooltip"
+                                                    onclick="showDeleteAlert('${note.id}');"><i
+                                                    class="material-icons">&#xe872;</i>
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </section>
         <div class="d-flex justify-content-center" th:if="${allNotes.size() > 0}">
             <nav aria-label="Notes Pagination">
-                <ul class="pagination">
+                <ul class="pagination notes-pagination">
                     <li class="page-item" th:classappend="${currentPage == 1}? 'disabled'">
                         <a class="page-link" th:href="@{/note/list(page=1)}" tabindex="-1"
                            aria-disabled="true">Previous</a>
@@ -99,8 +109,8 @@
                 </ul>
             </nav>
         </div>
-    </main>
-</div>
+    </div>
+</main>
 <footer class="py-4 bg-dark text-white mt-auto">
     <p class="text-center">Java Dev Final Project Team-2</p>
 </footer>

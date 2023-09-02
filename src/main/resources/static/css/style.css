@@ -1,3 +1,16 @@
+body {
+    opacity:0;
+    animation:pageFadeIn ease-in 1;
+    animation-fill-mode:forwards;
+    animation-duration:0.15s;
+    animation-delay: .1s
+}
+
+@keyframes pageFadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
 .error-container {
     max-width: 400px;
     margin: 0 auto;
@@ -36,37 +49,47 @@
     background-color: #00449e;
 }
 
-.total,
 .access-type {
     pointer-events: none;
     cursor: default !important;
 }
 
-.total:hover {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-
 .create-note-form,
 .edit-note-form,
-.card {
+.card,
+.notes-list {
     box-shadow: 2px 2px 10px #dadada;
     margin: 5px;
     padding: 20px 20px;
     border-radius: 5px;
-    background-color: #fff8dc;
 }
 
-.notes-counter:hover,
+.note-date {
+    font-size: 13px;
+}
+
+.single-note,
+.edit-note-form {
+    background-color: #fffbeb;
+}
+
+.author {
+    font-weight: bold;
+}
+
+.author span {
+    font-weight: normal;
+}
+
+.card-buttons .list-group-item:hover {
+    background-color: #fffbeb !important;
+}
+
 .create-note-form:hover,
 .edit-note-form:hover,
 .card:hover {
     box-shadow: 4px 4px 20px #dadada;
     transition: .3s linear all;
-}
-
-.notes-counter .count-numbers {
-    font-size: 2rem;
 }
 
 a.edit {
