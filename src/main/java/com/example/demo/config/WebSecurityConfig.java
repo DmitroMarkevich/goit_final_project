@@ -25,6 +25,7 @@ public class WebSecurityConfig {
                 .formLogin(login -> {
                     login.loginPage("/login");
                     login.defaultSuccessUrl("/note/list");
+                    login.failureUrl("/login?error");
                 })
                 .logout(logout -> {
                     logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();

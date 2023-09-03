@@ -30,6 +30,7 @@
                            placeholder="Enter password" required maxlength="100" minlength="8">
                     <label class="form-label" for="password">Password</label>
                 </div>
+                <p th:if="${param.error}" class="error-message">Incorrect username or password</p>
                 <div class="text-center text-lg-start mt-4 pt-2">
                     <button type="submit" class="btn btn-primary"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">Login

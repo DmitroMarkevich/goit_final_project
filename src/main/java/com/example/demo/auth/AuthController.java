@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -23,12 +24,17 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ModelAndView showLoginForm(Authentication authentication) {
+    public ModelAndView showLoginForm(Authentication authentication, @RequestParam(name = "error", required = false) String error) {
         if (userService.isAuthenticated(authentication)) {
             return new ModelAndView("redirect:/note/list");
         }
 
-        return new ModelAndView("auth/login");
+        ModelAndView modelAndView = new ModelAndView("auth/login");
+        if (error != null) {
+            modelAndView.addObject("error", true);
+        }
+
+        return modelAndView;
     }
 
     @GetMapping("/register")

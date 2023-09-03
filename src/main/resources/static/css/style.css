@@ -118,3 +118,8 @@ input[readonly] {
     pointer-events: none;
     cursor: default;
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
