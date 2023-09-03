@@ -19,6 +19,23 @@
             background-color: #1e1e1e;
             color: #ffffff;
         }
+        body.dark-theme input[type="text"],
+        body.dark-theme input[type="email"],
+        body.dark-theme input[type="password"],
+        body.dark-theme input[type="text"]::placeholder,
+        body.dark-theme input[type="email"]::placeholder,
+        body.dark-theme input[type="password"]::placeholder,
+        body.dark-theme textarea {
+        background-color: #555;
+        color: #ccc;
+        border: 1px solid #555;
+}
+        body.dark-theme input[type="text"][value],
+        body.dark-theme input[type="email"][value],
+        body.dark-theme input[type="password"][value],
+        body.dark-theme textarea {
+        color: #000;
+}
 
     </style>
 </head>
