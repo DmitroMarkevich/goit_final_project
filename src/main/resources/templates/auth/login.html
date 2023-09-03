@@ -10,36 +10,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Sign in</title>
-    <style id="themeStyles">
-        body.light-theme {
-            background-color: #ffffff;
-            color: #000000;
-        }
-        body.dark-theme  {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-        body.dark-theme .form-container {
-        background-color: #000;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-        body.dark-theme .form-control {
-        background-color: #333;
-        color: #fff;
-}
-
-    </style>
 </head>
 <body>
 <div class="container vh-100">
-    <div class="theme-switch-container">
-        <div class="theme-switch">
-            <input type="checkbox" id="themeSwitch" class="theme-switch-input">
-            <label for="themeSwitch" class="theme-switch-label"></label>
-        </div>
-    </div>
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
             <img th:src="@{/img/notes.webp}" class="img-fluid" alt="Notes">
@@ -71,29 +44,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
-</script>
-<script th:inline="javascript">
-    var currentTheme = localStorage.getItem("theme");
-
-    function setTheme(theme) {
-        document.body.className = theme + "-theme";
-        localStorage.setItem("theme", theme);
-    }
-
-    if (currentTheme) {
-        setTheme(currentTheme);
-        if (currentTheme === "dark") {
-            document.getElementById("themeSwitch").checked = true;
-        }
-    }
-
-    document.getElementById("themeSwitch").addEventListener("change", function () {
-        if (this.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
-    });
 </script>
 </body>
 </html>

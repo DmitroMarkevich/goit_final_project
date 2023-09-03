@@ -10,8 +10,25 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Account Settings</title>
+    <style id="themeStyles">
+        body.light-theme {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        body.dark-theme  {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+    </style>
 </head>
 <body class="d-flex flex-column h-100">
+<div class="theme-switch-container">
+    <div class="theme-switch">
+        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
+        <label for="themeSwitch" class="theme-switch-label"></label>
+    </div>
+</div>
 <header class="p-3 bg-dark text-white bd-navbar sticky-top">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -70,6 +87,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
+</script>
+<script th:inline="javascript">
+    var currentTheme = localStorage.getItem("theme");
+
+    function setTheme(theme) {
+        document.body.className = theme + "-theme";
+        localStorage.setItem("theme", theme);
+    }
+    if (currentTheme) {
+        setTheme(currentTheme);
+        if (currentTheme === "dark") {
+            document.getElementById("themeSwitch").checked = true;
+        }
+    }
+    document.getElementById("themeSwitch").addEventListener("change", function () {
+        if (this.checked) {
+            setTheme("dark");
+        } else {
+            setTheme("light");
+        }
+     });
 </script>
 </body>
 </html>
