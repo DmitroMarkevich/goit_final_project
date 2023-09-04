@@ -58,6 +58,9 @@
             <input type="text" id="lastname" name="lastName" class="form-control form-control-lg"
                    placeholder="Enter your last name" th:value="${editUser?.lastName}">
         </div>
+        <div th:if="${param.emailError}">
+            <p class="text-danger">This email is used by another user.</p>
+        </div>
         <div class="text-center text-lg-start mt-4 pt-2">
             <a th:href="@{/note/list}" type="button" class="btn btn-outline-danger m-1 float-start"
                style="padding-left: 2.5rem; padding-right: 2.5rem;">Cancel

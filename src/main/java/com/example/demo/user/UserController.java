@@ -20,14 +20,18 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ModelAndView updateAccount(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) throws EmailAlreadyUsedException {
+    public ModelAndView updateAccount(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("error/base-error");
         } else {
-            userService.updateUser(userDto);
-            modelAndView.setViewName("redirect:/user/settings");
+            try {
+                userService.updateUser(userDto);
+                modelAndView.setViewName("redirect:/user/settings");
+            } catch (EmailAlreadyUsedException e) {
+                modelAndView.setViewName("redirect:/user/settings?emailError=true");
+            }
         }
 
         return modelAndView;

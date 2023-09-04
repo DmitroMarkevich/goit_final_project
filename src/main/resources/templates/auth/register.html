@@ -45,6 +45,12 @@
                            name="lastName" placeholder="Enter your last name">
                     <label class="form-label" for="lastname">Last name (Optional)</label>
                 </div>
+                <div th:if="${param.emailError}">
+                    <p class="text-danger">Email address already exists.</p>
+                </div>
+                <div th:if="${param.usernameError}">
+                    <p class="text-danger">Username already exists.</p>
+                </div>
                 <div class="text-center text-lg-start mt-4 pt-2">
                     <button type="submit" class="btn btn-primary"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">Register
