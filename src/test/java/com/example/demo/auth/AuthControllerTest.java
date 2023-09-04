@@ -1,5 +1,7 @@
 package com.example.demo.auth;
 
+import com.example.demo.exception.user.EmailAlreadyUsedException;
+import com.example.demo.exception.user.UsernameAlreadyUsedException;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import org.junit.jupiter.api.Test;
@@ -36,7 +38,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testRegisterUser_ValidUser() {
+    public void testRegisterUser_ValidUser() throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
         UserService userService = mock(UserService.class);
         AuthController authController = new AuthController(userService);
 
@@ -51,7 +53,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testRegisterUser_InvalidUser() {
+    public void testRegisterUser_InvalidUser() throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
         UserService userService = mock(UserService.class);
         AuthController authController = new AuthController(userService);
 

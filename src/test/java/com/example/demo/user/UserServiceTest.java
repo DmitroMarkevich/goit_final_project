@@ -2,6 +2,7 @@ package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
 import com.example.demo.exception.user.EmailAlreadyUsedException;
+import com.example.demo.exception.user.UsernameAlreadyUsedException;
 import com.example.demo.note.NoteEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +76,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateUserHappyPath() {
+    void testCreateUserHappyPath() throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         when(passwordEncoder.encode(any())).thenReturn("encoded_test_password");
         when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
