@@ -30,11 +30,15 @@
                            placeholder="Enter password" required maxlength="100" minlength="8">
                     <label class="form-label" for="password">Password</label>
                 </div>
+                <div th:if="${param.error}">
+                    <p class="text-danger"> Invalid username or password</p>
+                </div>
                 <div class="text-center text-lg-start mt-4 pt-2">
                     <button type="submit" class="btn btn-primary"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">Login
                     </button>
-                    <p class="mt-2 pt-1 mb-0">Don't have an account? <a th:href="@{/register}" class="link-danger">Sign up</a>
+                    <p class="mt-2 pt-1 mb-0">Don't have an account? <a th:href="@{/register}" class="link-danger">Sign
+                        up</a>
                     </p>
                 </div>
             </form>
