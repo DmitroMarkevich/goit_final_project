@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -43,7 +44,10 @@ public class UserService implements UserDetailsService {
                 .build()
         ));
 
-        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "Successfully registered!"));
+        Context context = new Context();
+        context.setVariable("message", userDto);
+
+        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "email/successful-registration", context));
 
         return createdUser;
     }
@@ -78,7 +82,10 @@ public class UserService implements UserDetailsService {
                 .notes(existingUser.getNotes())
                 .build()));
 
-        emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "Your account successfully updated!"));
+        Context context = new Context();
+        context.setVariable("message", updatedUser);
+
+        emailExecutor.submit(() -> emailService.sendEmail(updatedUser.getEmail(), "Updating settings", "email/updated-settings", context));
 
         return updatedUser;
     }
