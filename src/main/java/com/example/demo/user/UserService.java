@@ -2,6 +2,7 @@ package com.example.demo.user;
 
 import com.example.demo.email.EmailService;
 import com.example.demo.exception.user.EmailAlreadyUsedException;
+import com.example.demo.exception.user.UsernameAlreadyUsedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +38,18 @@ public class UserService implements UserDetailsService {
         return new User(userEntity.getUsername(), userEntity.getPassword(), List.of());
     }
 
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
+        String userEmail = userDto.getEmail();
+        String userUsername = userDto.getUsername();
+
+        if (userRepository.findByEmail(userEmail).isPresent()) {
+            throw new EmailAlreadyUsedException(userEmail);
+        }
+
+        if (userRepository.findByUsername(userUsername).isPresent()) {
+            throw new UsernameAlreadyUsedException(userUsername);
+        }
+
         UserDto createdUser = userMapper.mapEntityToDto(userRepository.save(userMapper.mapDtoToEntity(userDto).toBuilder()
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .updatedAt(new Timestamp(System.currentTimeMillis()))
@@ -47,7 +59,7 @@ public class UserService implements UserDetailsService {
         Context context = new Context();
         context.setVariable("message", userDto);
 
-        emailExecutor.submit(() -> emailService.sendEmail(userDto.getEmail(), "Registration", "email/successful-registration", context));
+        emailExecutor.submit(() -> emailService.sendEmail(userEmail, "Registration", "email/successful-registration", context));
 
         return createdUser;
     }
