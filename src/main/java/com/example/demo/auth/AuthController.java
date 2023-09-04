@@ -43,15 +43,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
+    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("error/base-error");
+            modelAndView.setViewName("auth/register");
         } else {
-            userService.createUser(userDto);
-            modelAndView.setViewName("auth/login");
+            try {
+                userService.createUser(userDto);
+                modelAndView.setViewName("auth/login");
+            } catch (EmailAlreadyUsedException e) {
+                modelAndView.setViewName("redirect:/register?emailError=true");
+            } catch (UsernameAlreadyUsedException e) {
+                modelAndView.setViewName("redirect:/register?usernameError=true");
+            }
         }
+
         return modelAndView;
     }
 }
