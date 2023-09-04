@@ -1,5 +1,7 @@
 package com.example.demo.auth;
 
+import com.example.demo.exception.user.EmailAlreadyUsedException;
+import com.example.demo.exception.user.UsernameAlreadyUsedException;
 import com.example.demo.user.UserDto;
 import com.example.demo.user.UserService;
 import jakarta.validation.Valid;
@@ -41,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
+    public ModelAndView registerUser(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
