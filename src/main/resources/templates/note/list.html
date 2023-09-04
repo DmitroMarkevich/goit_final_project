@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -21,11 +21,15 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <a th:href="@{/note/create}" type="button" class="add btn btn-primary me-2">Add new note</a>
+                <a th:href="@{/note/create}" type="button" class="add btn btn-outline-light me-2">Add new note</a>
             </div>
             <div class="text-end">
+                <div class="form-check form-switch d-inline-block me-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+                    <label class="form-check-label" for="themeSwitch">Color Scheme</label>
+                </div>
                 <a th:href="@{/user/settings}">
-                    <button type="button" class="btn btn-warning me-2">Settings</button>
+                    <button type="button" class="btn btn-outline-light me-2">Settings</button>
                 </a>
                 <a th:href="@{/logout}">
                     <button type="button" class="btn btn-outline-light">Logout</button>
@@ -38,9 +42,9 @@
     <div class="container">
         <section class="mb-5">
             <h1 class="my-5 text-center" th:if="${allNotesSize == 0}">It's Empty Here</h1>
-            <h1 class="my-5 text-center" th:unless="${allNotesSize == 0}">My Notes <span class="badge text-bg-danger ms-2"
-                                                                                            th:text="${allNotesSize}"
-                                                                                            style="font-size: 45%; vertical-align: 25%;"></span>
+            <h1 class="my-5 text-center" th:unless="${allNotesSize == 0}">My Notes <span class="badge ms-2 count"
+                                                                                         th:text="${allNotesSize}"
+                                                                                         style="font-size: 45%; vertical-align: 25%;"></span>
             </h1>
             <div class="row notes-list">
                 <div class="col-lg-6 mb-4" th:each="note : ${allNotes}">
@@ -119,5 +123,6 @@
         crossorigin="anonymous">
 </script>
 <script type="text/javascript" th:src="@{/js/script.js}"></script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>

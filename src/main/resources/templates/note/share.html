@@ -16,6 +16,10 @@
     <div class="container">
         <h4 class="text-center">You are viewing a shared note</h4>
     </div>
+    <div class="form-check form-switch d-inline-block me-3">
+        <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+        <label class="form-check-label" for="themeSwitch">Color Scheme</label>
+    </div>
 </header>
 <div class="container mb-3 h-100">
     <main class="bd-main row align-items-center justify-content-center h-100">
@@ -37,7 +41,7 @@
                           th:text="'Updated: ' + ${#dates.format(updatedAt, 'dd-MM-yyyy HH:mm')}"></span>
                 </div>
                 <div class="col-4 d-flex justify-content-end">
-                    <a th:href="@{/note/list}" type="button" class="btn btn-outline-primary m-1">Back to main</a>
+                    <a th:href="@{/note/list}" type="button" class="btn btn-outline-secondary m-1">Back to main</a>
                 </div>
             </div>
         </div>
@@ -50,5 +54,6 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
 </script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>
