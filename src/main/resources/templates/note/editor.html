@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,40 +10,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Edit note</title>
-    <style id="themeStyles">
-    body.light-theme {
-        background-color: #ffffff;
-        color: #000000;
-    }
-    body.dark-theme  {
-        background-color: #333;
-        color: #ffffff;
-    }
-    body.dark-theme .edit-note-form {
-            background-color: #666666;
-            color: #ffffff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    body.dark-theme .edit-note-form input,
-    body.dark-theme .edit-note-form textarea {
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #555;
-    }
-
-    body.dark-theme .material-icons {
-            color: #fff;
-    }
-    </style>
 </head>
 <body class="d-flex flex-column h-100">
-<div class="theme-switch-container">
-    <div class="theme-switch">
-        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
-        <label for="themeSwitch" class="theme-switch-label"></label>
+<header class="p-3 bg-dark text-white bd-navbar sticky-top">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <a th:href="@{/note/list}" type="button" class="add btn btn-outline-light me-2">Main</a>
+            </div>
+            <div class="text-end">
+                <div class="form-check form-switch d-inline-block me-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+                    <label class="form-check-label" for="themeSwitch">Color Scheme</label>
+                </div>
+                <a th:href="@{/user/settings}">
+                    <button type="button" class="btn btn-outline-light me-2">Settings</button>
+                </a>
+                <a th:href="@{/logout}">
+                    <button type="button" class="btn btn-outline-light">Logout</button>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
+</header>
 <div class="container">
     <div class="row pt-4 mb-4 text-center">
         <h1 th:text="'Edit note: ' + ${editNote?.title}"></h1>
@@ -91,28 +80,6 @@
 </script>
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script type="text/javascript" th:src="@{/js/form-validation.js}"></script>
-<script th:inline="javascript">
-    var currentTheme = localStorage.getItem("theme");
-
-    function setTheme(theme) {
-        document.body.className = theme + "-theme";
-        localStorage.setItem("theme", theme);
-    }
-
-    if (currentTheme) {
-        setTheme(currentTheme);
-        if (currentTheme === "dark") {
-            document.getElementById("themeSwitch").checked = true;
-        }
-    }
-
-    document.getElementById("themeSwitch").addEventListener("change", function () {
-        if (this.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
-    });
-</script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>

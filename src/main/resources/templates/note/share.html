@@ -10,32 +10,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Notes list</title>
-    <style id="themeStyles">
-        body.light-theme {
-            background-color: #ffffff;
-            color: #000000;
-        }
-        body.dark-theme  {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-        body.dark-theme .card.single-note {
-        background-color: #333333;
-        color: #ffffff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        }
-    </style>
 </head>
 <body class="d-flex flex-column h-100">
-<div class="theme-switch-container">
-    <div class="theme-switch">
-        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
-        <label for="themeSwitch" class="theme-switch-label"></label>
-    </div>
-</div>
 <header class="p-3 bg-dark text-white bd-navbar sticky-top">
     <div class="container">
         <h4 class="text-center">You are viewing a shared note</h4>
+    </div>
+    <div class="form-check form-switch d-inline-block me-3">
+        <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+        <label class="form-check-label" for="themeSwitch">Color Scheme</label>
     </div>
 </header>
 <div class="container mb-3 h-100">
@@ -58,7 +41,7 @@
                           th:text="'Updated: ' + ${#dates.format(updatedAt, 'dd-MM-yyyy HH:mm')}"></span>
                 </div>
                 <div class="col-4 d-flex justify-content-end">
-                    <a th:href="@{/note/list}" type="button" class="btn btn-outline-primary m-1">Back to main</a>
+                    <a th:href="@{/note/list}" type="button" class="btn btn-outline-secondary m-1">Back to main</a>
                 </div>
             </div>
         </div>
@@ -71,26 +54,6 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
 </script>
-<script th:inline="javascript">
-    var currentTheme = localStorage.getItem("theme");
-
-    function setTheme(theme) {
-        document.body.className = theme + "-theme";
-        localStorage.setItem("theme", theme);
-    }
-    if (currentTheme) {
-        setTheme(currentTheme);
-        if (currentTheme === "dark") {
-            document.getElementById("themeSwitch").checked = true;
-        }
-    }
-    document.getElementById("themeSwitch").addEventListener("change", function () {
-        if (this.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
-     });
-</script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>

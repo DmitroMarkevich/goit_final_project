@@ -58,7 +58,6 @@ body {
 .edit-note-form,
 .card,
 .notes-list {
-    box-shadow: 2px 2px 10px #dadada;
     margin: 5px;
     padding: 20px 20px;
     border-radius: 5px;
@@ -68,17 +67,20 @@ body {
     font-size: 13px;
 }
 
-.single-note,
-.edit-note-form {
-    background-color: #fffbeb;
-}
-
 .author {
     font-weight: bold;
 }
 
 .author span {
     font-weight: normal;
+}
+
+.single-note,
+.notes-list,
+.edit-note-form {
+     background-color: #fffbeb;
+     box-shadow: 2px 2px 10px #dadada;
+     color: #212529;
 }
 
 .card-buttons .list-group-item:hover {
@@ -92,16 +94,9 @@ body {
     transition: .3s linear all;
 }
 
-a.edit {
-    color: #FFC107;
-}
-
-a.share {
-    color: #03A9F4;
-}
-
-.delete {
-    color: #E34724;
+.badge.bg-success,
+.badge.bg-danger {
+    opacity: 0.6;
 }
 
 i.material-icons {
@@ -118,38 +113,59 @@ input[readonly] {
     pointer-events: none;
     cursor: default;
 }
-.theme-switch-container {
-    display: flex;
-    align-items: center;
+
+[data-bs-theme=dark] {
+    --bs-body-bg: #161616;
+    .single-note,
+    .notes-list,
+    .edit-note-form {
+        background-color: #212529;
+        box-shadow: 2px 2px 10px #121212;
+        color: #dee2e6;
+    }
+
+    .edit,
+    .share,
+    .delete {
+        color: #dee2e6;
+    }
+
+    .card-buttons .list-group-item:hover {
+        background-color: #212529 !important;
+    }
+
+    .CodeMirror {
+        background-color: #161616;
+        color: #dee2e6;
+    }
 }
 
-.theme-switch {
-    position: relative;
-    width: 50px;
-    height: 30px;
+a.edit,
+a.share,
+.delete {
+     color: #212529;
 }
 
-.theme-switch-input {
-    display: none;
+.count {
+    background-color: #212529;
+    color: #ffffff;
 }
 
-.theme-switch-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 90%;
-    height: 90%;
-    background-color: #ccc;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.form-check-input:checked {
+    background-color: #161616;
+    border-color: #161616;
 }
 
-.theme-switch-input:checked + .theme-switch-label {
-    background-color: #007bff;
-    left: 30px;
+.form-check-input:focus {
+    border-color: #797979;
+    box-shadow: 0 0 0 0.25rem rgb(114 114 114 / 25%);
 }
-.theme-switch-input + .theme-switch-label {
-    background-color: #ccc;
-    left: 0;
+
+.pagination {
+    --bs-pagination-active-bg: #212529;
+    --bs-pagination-active-border-color: #212529;
+    --bs-pagination-color: #212529;
+    --bs-pagination-hover-color: #212529;
+    --bs-pagination-focus-color: #161616;
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(97, 97, 97, 0.25);
 }

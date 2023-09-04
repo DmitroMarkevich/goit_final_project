@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org ">
+<!doctype html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,56 +10,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Notes list</title>
-    <style id="themeStyles">
-        body.light-theme {
-            background-color: #ffffff;
-            color: #000000;
-        }
-         body.dark-theme {
-        background-color: #1e1e1e;
-        color: #ffffff;
-        }
-        body.dark-theme .card.single-note {
-        background-color: #333333;
-        color: #ffffff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        body.dark-theme .card-title {
-        color: #ffffff;
-        }
-
-        body.dark-theme .page-item a.page-link {
-        background-color: #007bff;
-        border-color: #007bff;
-        color: #fff;
-        }
-
-        body.dark-theme .page-item.disabled a.page-link {
-        background-color: #333;
-        border-color: #333;
-        color: #888;
-}
-    </style>
 </head>
-<body class="d-flex flex-column h-100" th:class="${currentTheme ?: 'light'}">
-<div class="theme-switch-container">
-    <div class="theme-switch">
-        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
-        <label for="themeSwitch" class="theme-switch-label"></label>
-    </div>
-</div>
+<body class="d-flex flex-column h-100">
 <header class="p-3 bg-dark text-white bd-navbar sticky-top">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <a th:href="@{/note/create}" type="button" class="add btn btn-primary me-2">Add new note</a>
+                <a th:href="@{/note/create}" type="button" class="add btn btn-outline-light me-2">Add new note</a>
             </div>
             <div class="text-end">
+                <div class="form-check form-switch d-inline-block me-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+                    <label class="form-check-label" for="themeSwitch">Color Scheme</label>
+                </div>
                 <a th:href="@{/user/settings}">
-                    <button type="button" class="btn btn-warning me-2">Settings</button>
+                    <button type="button" class="btn btn-outline-light me-2">Settings</button>
                 </a>
                 <a th:href="@{/logout}">
                     <button type="button" class="btn btn-outline-light">Logout</button>
@@ -73,10 +42,9 @@
     <div class="container">
         <section class="mb-5">
             <h1 class="my-5 text-center" th:if="${allNotesSize == 0}">It's Empty Here</h1>
-            <h1 class="my-5 text-center" th:unless="${allNotesSize == 0}">My Notes <span
-                    class="badge text-bg-danger ms-2"
-                    th:text="${allNotesSize}"
-                    style="font-size: 45%; vertical-align: 25%;"></span>
+            <h1 class="my-5 text-center" th:unless="${allNotesSize == 0}">My Notes <span class="badge ms-2 count"
+                                                                                         th:text="${allNotesSize}"
+                                                                                         style="font-size: 45%; vertical-align: 25%;"></span>
             </h1>
             <div class="row notes-list">
                 <div class="col-lg-6 mb-4" th:each="note : ${allNotes}">
@@ -89,10 +57,8 @@
                         </div>
                         <div class="card-footer d-flex px-2">
                             <div class="col-2 d-flex">
-                                <span class="badge bg-success d-flex align-items-center"
-                                      th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">public</span>
-                                <span class="badge bg-danger d-flex align-items-center"
-                                      th:if="${#strings.equalsIgnoreCase(note.accessType, 'private')}">private</span>
+                                <span class="badge bg-success d-flex align-items-center" th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">public</span>
+                                <span class="badge bg-danger d-flex align-items-center" th:if="${#strings.equalsIgnoreCase(note.accessType, 'private')}">private</span>
                             </div>
                             <div class="col-6">
                                 <span class="note-date d-block mb-2"
@@ -108,10 +74,8 @@
                                             <i class="material-icons">&#xe254;</i>
                                         </a>
                                     </li>
-                                    <li class="list-group-item bg-transparent"
-                                        th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">
-                                        <a th:href="'/note/share?id='+${note.id}" type="button" class="share"
-                                           title="Share"
+                                    <li class="list-group-item bg-transparent" th:if="${#strings.equalsIgnoreCase(note.accessType, 'public')}">
+                                        <a th:href="'/note/share?id='+${note.id}" type="button" class="share" title="Share"
                                            data-toggle="tooltip">
                                             <i class="material-icons">&#xe80d;</i>
                                         </a>
@@ -119,8 +83,7 @@
                                     <li class="list-group-item bg-transparent">
                                         <form th:action="@{/note/delete}" method="post" class="d-inline-block">
                                             <input type="hidden" name="id" th:value="${note.id}">
-                                            <button type="submit" class="delete btn p-0" title="Delete"
-                                                    data-toggle="tooltip"
+                                            <button type="submit" class="delete btn p-0" title="Delete" data-toggle="tooltip"
                                                     onclick="showDeleteAlert('${note.id}');"><i
                                                     class="material-icons">&#xe872;</i>
                                             </button>
@@ -153,36 +116,13 @@
     </div>
 </main>
 <footer class="py-4 bg-dark text-white mt-auto">
-    <div class="container">
-        <p class="text-center">Java Dev Final Project Team-2</p>
-    </div>
+    <p class="text-center">Java Dev Final Project Team-2</p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
 </script>
 <script type="text/javascript" th:src="@{/js/script.js}"></script>
-
-<script th:inline="javascript">
-    var currentTheme = localStorage.getItem("theme");
-
-    function setTheme(theme) {
-        document.body.className = theme + "-theme";
-        localStorage.setItem("theme", theme);
-    }
-    if (currentTheme) {
-        setTheme(currentTheme);
-        if (currentTheme === "dark") {
-            document.getElementById("themeSwitch").checked = true;
-        }
-    }
-    document.getElementById("themeSwitch").addEventListener("change", function () {
-        if (this.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
-     });
-</script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>

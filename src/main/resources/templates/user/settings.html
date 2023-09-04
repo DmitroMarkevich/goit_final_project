@@ -10,49 +10,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>Account Settings</title>
-    <style id="themeStyles">
-        body.light-theme {
-            background-color: #ffffff;
-            color: #000000;
-        }
-        body.dark-theme  {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-        body.dark-theme input[type="text"],
-        body.dark-theme input[type="email"],
-        body.dark-theme input[type="password"],
-        body.dark-theme input[type="text"]::placeholder,
-        body.dark-theme input[type="email"]::placeholder,
-        body.dark-theme input[type="password"]::placeholder,
-        body.dark-theme textarea {
-        background-color: #555;
-        color: #ccc;
-        border: 1px solid #555;
-}
-        body.dark-theme input[type="text"][value],
-        body.dark-theme input[type="email"][value],
-        body.dark-theme input[type="password"][value],
-        body.dark-theme textarea {
-        color: #000;
-}
-
-    </style>
 </head>
 <body class="d-flex flex-column h-100">
-<div class="theme-switch-container">
-    <div class="theme-switch">
-        <input type="checkbox" id="themeSwitch" class="theme-switch-input">
-        <label for="themeSwitch" class="theme-switch-label"></label>
-    </div>
-</div>
 <header class="p-3 bg-dark text-white bd-navbar sticky-top">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <a th:href="@{/note/list}" type="button" class="add btn btn-primary me-2">Main</a>
+                <a th:href="@{/note/list}" type="button" class="add btn btn-outline-light me-2">Main</a>
             </div>
             <div class="text-end">
+                <div class="form-check form-switch d-inline-block me-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+                    <label class="form-check-label" for="themeSwitch">Color Scheme</label>
+                </div>
                 <a th:href="@{/logout}">
                     <button type="button" class="btn btn-outline-light">Logout</button>
                 </a>
@@ -92,7 +62,7 @@
             <a th:href="@{/note/list}" type="button" class="btn btn-outline-danger m-1 float-start"
                style="padding-left: 2.5rem; padding-right: 2.5rem;">Cancel
             </a>
-            <button type="submit" class="btn btn-outline-primary float-end"
+            <button type="submit" class="btn btn-outline-success float-end"
                     style="padding-left: 2.5rem; padding-right: 2.5rem;">Update
             </button>
         </div>
@@ -105,26 +75,6 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous">
 </script>
-<script th:inline="javascript">
-    var currentTheme = localStorage.getItem("theme");
-
-    function setTheme(theme) {
-        document.body.className = theme + "-theme";
-        localStorage.setItem("theme", theme);
-    }
-    if (currentTheme) {
-        setTheme(currentTheme);
-        if (currentTheme === "dark") {
-            document.getElementById("themeSwitch").checked = true;
-        }
-    }
-    document.getElementById("themeSwitch").addEventListener("change", function () {
-        if (this.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
-     });
-</script>
+<script type="text/javascript" th:src="@{/js/color-switcher.js}"></script>
 </body>
 </html>
