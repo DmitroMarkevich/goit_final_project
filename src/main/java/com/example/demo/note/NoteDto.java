@@ -20,7 +20,7 @@ public class NoteDto {
     @Size(min = 5, max = 100, message = "Error - Enter a title between 5 and 100 characters!")
     private String title;
 
-    @Size(min = 5, max = 500, message = "Error - Enter content between 5 and 500 characters!")
+    @Size(min = 5, max = 10000, message = "Error - Enter content between 5 and 10000 characters!")
     private String content;
 
     private AccessType accessType;
