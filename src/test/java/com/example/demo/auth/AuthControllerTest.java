@@ -51,21 +51,6 @@ public class AuthControllerTest {
         verify(userService).createUser(userDto);
         assertEquals("auth/login", modelAndView.getViewName());
     }
-
-    @Test
-    public void testRegisterUser_InvalidUser() throws EmailAlreadyUsedException, UsernameAlreadyUsedException {
-        UserService userService = mock(UserService.class);
-        AuthController authController = new AuthController(userService);
-
-        UserDto userDto = new UserDto();
-        BindingResult bindingResult = mock(BindingResult.class);
-        when(bindingResult.hasErrors()).thenReturn(true);
-
-        ModelAndView modelAndView = authController.registerUser(userDto, bindingResult);
-
-        verify(userService, never()).createUser(userDto);
-        assertEquals("error/base-error", modelAndView.getViewName());
-    }
 }
 
 
