@@ -1,25 +1,15 @@
-# **[Note Service](https://notes.soon.it)**
-### **About**
-Notes is an application to create and share notes among users. 
+# [Note Service](https://notes.soon.it)
+## **About**
+Note Service is a helpful platform for creating and organizing tasks. It offers a user-friendly interface and useful features that boost productivity, making it a valuable tool for both personal and professional tasks.
 
-### **Key Functions**
-- Authorization and registration an acсount;
-- Creating, updating and sharing notes.
+## **How to run**
+**Run application with PostgreSQL in your IDE (```spring.profiles.active=prod```)**
 
-### **How to run**
-```application.properties     ``` -  use as DEV with H2 DB </br>
-```application-prod.properties``` -  use as PRODUCT with PostgreSQL 
-```
-1. Add this code in the build.gradle file:
-bootRun {
-  jvmArgs = ["-Dspring.profiles.active=prod"]
-}
-```
-OR
-2. Run application with environment variable ```spring.profiles.active=prod``` in your IDE.
+```application.properties     ```  –  use as DEV with H2 DB </br>
+```application-prod.properties```  –  use as PROD with PostgreSQL
 
-### DB CONNECTION CONFIGURATION AND SET ENVIRONMENT VARIABLES
-1.Create environment variables:
+### DB CONNECTION CONFIG
+Create environment variables:
 ```
 ${DB_URL}        ->  DB url;
 ${DB_USERNAME}   ->  DB user;
@@ -27,7 +17,6 @@ ${DB_PASSWORD}   ->  DB password;
 ${MAIL_USERNAME} ->  Email;
 ${MAIL_PASSWORD} ->  Email password.
 ```
-
 Example for Windows, run  CMD and execute commands:
 ```
 setx DB_USERNAME "user"
@@ -43,8 +32,7 @@ For connection use defaults:
 DB_USERNAME = user
 DB_PASSWORD = 12345
 ```
-
-### **Technologies**
+## **Technologies**
 - Java 17
 - Gradle
 - Spring boot (Core, MVC, Security, Data)
