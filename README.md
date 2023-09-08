@@ -1,4 +1,4 @@
-# **Notes**
+# **[Note Service](https://notes.soon.it)**
 ### **About**
 Notes is an application to create and share notes among users. 
 
@@ -12,7 +12,7 @@ Notes is an application to create and share notes among users.
 ```
 1.Add this code in the build.gradle file:
 bootRun {
-jvmArgs = ["-Dspring.profiles.active=prod"]
+  jvmArgs = ["-Dspring.profiles.active=prod"]
 }
 ```
 OR
@@ -48,7 +48,7 @@ DB_PASSWORD = 12345
 - Java 17
 - Gradle
 - Spring boot (Core, MVC, Security, Data)
-- H2(in Memory), PostgreSQL
+- H2 (in-memory), PostgreSQL
 - Flyway
 - Hibernate 
 - JUnit, Mockito
